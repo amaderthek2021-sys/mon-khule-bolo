@@ -880,6 +880,7 @@ function handleRegister(e) {
         alert("দয়া করে একটি সঠিক ১০-ডিজিটের ফোন নম্বর লিখুন।");
         return;
     }
+    const targetLast10 = cleanPhone.slice(-10);
     let matchedUser = null;
     const isDuplicate = db.users.some(u => {
         if (!u.phoneNumber) return false;
