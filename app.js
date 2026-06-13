@@ -2,7 +2,7 @@
 // Shared Google Apps Script Database Sync Logic
 
 // Paste your deployed Google Apps Script Web App URL here to sync the website and APK databases!
-const API_URL = "https://script.google.com/macros/s/AKfycbzDJLrL3DyaanXajhO9mPx9MY3F6WV698l8vy02ElmoDXTG7asJz2vdZG_evhHvlSEnpw/exec"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbzkO2uEkYR3WJLG_eAEkPTcvE0m06C0N7Bovuk1rm-DkNUPaZJHHDw9oLaqJVFLWdVu/exec"; 
 
 // Local/Offline Fallback State (seeded with the same mock data as the Android App)
 let db = {
@@ -664,7 +664,32 @@ async function syncFromRemote() {
         const response = await fetch(API_URL);
         const remoteData = await response.json();
         if (remoteData && remoteData.users) {
-            db.users = remoteData.users || [];
+            // Overwrite but always preserve and sync the admin user
+            const adminUser = {
+                uid: "admin_uid_7001646363",
+                phoneNumber: "7001646363",
+                fullName: "Admin Mod (অ্যাডমিন)",
+                username: "admin_mkhb",
+                password: "7001646363",
+                age: 30,
+                gender: "Other",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Kolkata (কলকাতা)",
+                city: "Kolkata City (কলকাতা শহর)",
+                role: "admin",
+                isVerified: true,
+                profilePicUrl: "👽",
+                bio: "নিরাপত্তা নিরীক্ষক।"
+            };
+            
+            const adminExists = remoteData.users.some(u => u.uid === adminUser.uid || String(u.phoneNumber).replace(/\D/g, "").slice(-10) === "7001646363");
+            if (!adminExists) {
+                db.users = [adminUser, ...(remoteData.users || [])];
+                syncToRemote("save_user", adminUser);
+            } else {
+                db.users = remoteData.users || [];
+            }
+            
             db.posts = remoteData.posts || [];
             db.comments = remoteData.comments || [];
             db.messages = remoteData.messages || [];
@@ -858,7 +883,7 @@ function handleRegister(e) {
     const targetLast10 = cleanPhone.slice(-10);
     const isDuplicate = db.users.some(u => {
         if (!u.phoneNumber) return false;
-        const dbPhone = u.phoneNumber.replace(/\D/g, "");
+        const dbPhone = String(u.phoneNumber).replace(/\D/g, "");
         if (dbPhone.length < 10) return false;
         return dbPhone.slice(-10) === targetLast10;
     });
@@ -965,7 +990,7 @@ function handleLogin(e) {
     const targetLast10 = cleanPhone.slice(-10);
     const user = db.users.find(u => {
         if (!u.phoneNumber) return false;
-        const dbPhone = u.phoneNumber.replace(/\D/g, "");
+        const dbPhone = String(u.phoneNumber).replace(/\D/g, "");
         return dbPhone.slice(-10) === targetLast10;
     });
     
