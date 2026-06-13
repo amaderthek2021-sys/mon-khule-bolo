@@ -259,6 +259,18 @@ button, input, select, textarea {
     animation: bounce 3s infinite;
 }
 
+.app-logo-img {
+    height: 120px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    animation: bounce 3s infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 0, 127, 0.4));
+    background: #fdfdfb;
+    padding: 8px;
+}
+
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -641,6 +653,15 @@ select:focus {
 .fb-logo-emoji {
     font-size: 1.8rem;
     filter: drop-shadow(0 0 5px var(--color-magenta-glow));
+}
+
+.fb-logo-img {
+    height: 32px;
+    background: #fdfdfb;
+    padding: 2px;
+    border-radius: 6px;
+    object-fit: contain;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .fb-logo-text {

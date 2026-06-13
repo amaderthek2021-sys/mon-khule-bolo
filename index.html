@@ -30,8 +30,7 @@
         <section id="screen-splash" class="screen active">
             <div class="splash-card glass">
                 <div class="logo-area">
-                    <span class="logo-emoji">🤫</span>
-                    <h1 class="logo-title font-outfit">মন খুলে বলো</h1>
+                    <img src="logo.png" class="app-logo-img" alt="Mon Khule Bolo Logo">
                     <p class="logo-tagline font-outfit" id="logo-tagline">Mon Khule Bolo</p>
                     <div class="neon-line"></div>
                 </div>
@@ -61,13 +60,7 @@
                     </button>
                 </div>
 
-                <div class="antigravity-badge-wrapper mt-2">
-                    <div class="antigravity-badge glass-inner" onclick="activateZeroGravity(event)">
-                        <span class="badge-icon"><i class="fas fa-user-astronaut"></i></span>
-                        <span class="badge-text">Engineered by <strong>Antigravity</strong></span>
-                        <span class="badge-glow"></span>
-                    </div>
-                </div>
+
             </div>
         </section>
 
@@ -100,6 +93,10 @@
                     
                     <button type="submit" class="btn btn-primary btn-block mt-2">লগইন (Sign In)</button>
                 </form>
+                
+                <button type="button" class="btn btn-secondary btn-block mt-1" onclick="prefillAdminCredentials()" style="background: rgba(255, 0, 127, 0.15); border: 1px solid var(--color-magenta); color: #fff;">
+                    <i class="fas fa-user-shield text-magenta"></i> অ্যাডমিন লগইন (Admin Login)
+                </button>
                 
                 <p class="auth-footer">
                     নতুন অ্যাকাউন্ট খুলতে চান? <a href="#" onclick="showScreen('screen-register')">রেজিস্ট্রেশন করুন</a>
@@ -311,7 +308,7 @@
             <!-- Facebook-like Top Navigation Bar -->
             <header class="fb-top-nav glass">
                 <div class="fb-left">
-                    <span class="fb-logo-emoji">🤫</span>
+                    <img src="logo.png" class="fb-logo-img" alt="Logo">
                     <span class="fb-logo-text font-outfit">মন খুলে বলো</span>
                 </div>
                 

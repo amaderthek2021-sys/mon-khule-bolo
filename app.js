@@ -850,9 +850,21 @@ function handleRegister(e) {
     }
     
     const phone = document.getElementById("reg-phone").value.trim();
+    const cleanPhone = phone.replace(/\D/g, "");
+    if (cleanPhone.length < 10) {
+        alert("দয়া করে একটি সঠিক ১০-ডিজিটের ফোন নম্বর লিখুন।");
+        return;
+    }
+    const targetLast10 = cleanPhone.slice(-10);
+    const isDuplicate = db.users.some(u => {
+        if (!u.phoneNumber) return false;
+        const dbPhone = u.phoneNumber.replace(/\D/g, "");
+        if (dbPhone.length < 10) return false;
+        return dbPhone.slice(-10) === targetLast10;
+    });
     
     // Check duplication
-    if (db.users.some(u => u.phoneNumber === phone || u.phoneNumber === "+91" + phone)) {
+    if (isDuplicate) {
         alert("এই ফোন নম্বরটি দিয়ে ইতিমধ্যে রেজিস্ট্রেশন করা আছে।");
         return;
     }
@@ -945,7 +957,17 @@ function handleLogin(e) {
     const phone = document.getElementById("login-phone").value.trim();
     const pass = document.getElementById("login-password").value.trim();
     
-    const user = db.users.find(u => u.phoneNumber === phone || u.phoneNumber === "+91" + phone);
+    const cleanPhone = phone.replace(/\D/g, "");
+    if (cleanPhone.length < 10) {
+        alert("দয়া করে একটি সঠিক ১০-ডিজিটের ফোন নম্বর লিখুন।");
+        return;
+    }
+    const targetLast10 = cleanPhone.slice(-10);
+    const user = db.users.find(u => {
+        if (!u.phoneNumber) return false;
+        const dbPhone = u.phoneNumber.replace(/\D/g, "");
+        return dbPhone.slice(-10) === targetLast10;
+    });
     
     if (!user || user.password !== pass) {
         alert("ভুল ফোন নম্বর বা পাসওয়ার্ড দেওয়া হয়েছে।");
@@ -976,6 +998,13 @@ function handleLogin(e) {
     
     switchTab("home");
     showToast(`স্বাগতম, ${currentUser.fullName}!`);
+}
+
+function prefillAdminCredentials() {
+    document.getElementById("login-phone").value = "7001646363";
+    document.getElementById("login-password").value = "7001646363";
+    const fakeEvent = { preventDefault: () => {} };
+    handleLogin(fakeEvent);
 }
 
 function logout() {
