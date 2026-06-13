@@ -880,17 +880,21 @@ function handleRegister(e) {
         alert("দয়া করে একটি সঠিক ১০-ডিজিটের ফোন নম্বর লিখুন।");
         return;
     }
-    const targetLast10 = cleanPhone.slice(-10);
+    let matchedUser = null;
     const isDuplicate = db.users.some(u => {
         if (!u.phoneNumber) return false;
         const dbPhone = String(u.phoneNumber).replace(/\D/g, "");
         if (dbPhone.length < 10) return false;
-        return dbPhone.slice(-10) === targetLast10;
+        if (dbPhone.slice(-10) === targetLast10) {
+            matchedUser = u;
+            return true;
+        }
+        return false;
     });
     
     // Check duplication
     if (isDuplicate) {
-        alert("এই ফোন নম্বরটি দিয়ে ইতিমধ্যে রেজিস্ট্রেশন করা আছে।");
+        alert("এই ফোন নম্বরটি দিয়ে ইতিমধ্যে রেজিস্ট্রেশন করা আছে।\n(Matched registered number: " + matchedUser.phoneNumber + ")");
         return;
     }
     
