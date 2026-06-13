@@ -595,15 +595,151 @@ button, input, select, textarea {
 /* ==========================================================================
    MAIN LAYOUT (SIDEBAR & PANES)
    ========================================================================== */
+/* Dropdown list text visibility fix */
+select option {
+    background-color: #110b24 !important;
+    color: #ffffff !important;
+}
+
+select {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--border-glass) !important;
+}
+
+select:focus {
+    border-color: var(--color-cyan) !important;
+}
+
+/* Facebook-like Top Navigation Bar */
+.fb-top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 64px;
+    padding: 0 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: rgba(10, 8, 19, 0.92);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.fb-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+.fb-logo-emoji {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 5px var(--color-magenta-glow));
+}
+
+.fb-logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #ffffff, var(--color-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fb-middle {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem !important;
+    height: 100%;
+    flex: 1;
+    max-width: 760px;
+    margin: 0 1rem;
+}
+
+.fb-middle .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.5rem 0.8rem;
+    height: 100%;
+    border-radius: 0;
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    font-weight: 500;
+    position: relative;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition-smooth);
+    background: transparent !important;
+}
+
+.fb-middle .nav-item i {
+    font-size: 1.25rem;
+}
+
+.fb-middle .nav-item span {
+    display: inline-block;
+}
+
+.fb-middle .nav-item:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.fb-middle .nav-item.active {
+    color: var(--color-cyan) !important;
+    border-bottom-color: var(--color-cyan) !important;
+    background: transparent !important;
+    border-left: none !important;
+}
+
+.fb-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+/* Avatar Upload Icon styling */
+.avatar-upload-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px dashed var(--border-glass-focus);
+    font-size: 1rem;
+    color: var(--text-gray);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.avatar-upload-option:hover {
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
 .screen-main-layout {
     display: none;
     width: 100vw;
     height: 100vh;
-    grid-template-columns: 260px 1fr;
+    padding-top: 64px;
+    flex-direction: column;
 }
 
 body.logged-in .screen-main-layout {
-    display: grid;
+    display: flex;
 }
 
 body.logged-in .screen-splash, 
@@ -613,83 +749,15 @@ body.logged-in .screen-pending {
     display: none !important;
 }
 
-/* Sidebar Styling */
-.sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    height: 100%;
-    border-radius: 0;
-    border-top: none;
-    border-bottom: none;
-    border-left: none;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 2.5rem;
-}
-
-.brand-emoji {
-    font-size: 1.8rem;
-}
-
-.brand h3 {
-    font-family: var(--font-outfit);
-    font-size: 1.2rem;
-    font-weight: 700;
-    background: linear-gradient(to right, white, var(--color-magenta));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    height: 100%;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.85rem 1rem;
-    color: var(--text-gray);
-    text-decoration: none;
-    font-weight: 500;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    transition: var(--transition-smooth);
-}
-
-.nav-item i {
-    font-size: 1.1rem;
-}
-
-.nav-item:hover, .nav-item.active {
-    color: var(--text-white);
-    background: var(--bg-glass-inner);
-}
-
-.nav-item.active {
-    border-left: 3px solid var(--color-magenta);
-    background: rgba(255, 0, 127, 0.08);
-}
-
-.nav-item.text-red:hover {
-    background: rgba(214, 48, 49, 0.1);
-}
-
 .badge {
     background: var(--color-magenta);
     color: white;
-    font-size: 0.75rem;
-    padding: 0.1rem 0.4rem;
+    font-size: 0.7rem;
+    padding: 0.05rem 0.35rem;
     border-radius: 10px;
-    margin-left: auto;
+    position: absolute;
+    top: 4px;
+    right: 4px;
     font-weight: 700;
 }
 
@@ -697,31 +765,26 @@ body.logged-in .screen-pending {
 .main-content {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: calc(100vh - 64px);
     overflow: hidden;
+    flex: 1;
 }
 
-/* Header */
-.app-header {
+/* Workspace Page Header */
+.workspace-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    border-radius: 0;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    padding: 1rem 2rem 0.5rem 2rem;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-.app-header h2 {
-    font-size: 1.2rem;
+.workspace-header h2 {
+    font-size: 1.3rem;
     font-weight: 600;
-}
-
-.header-right {
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
+    color: var(--text-white);
 }
 
 .btn-icon {
@@ -1841,82 +1904,64 @@ body.logged-in .screen-pending {
    MOBILE SUPPORT RESPONSIVENESS OVERRIDES
    ========================================================================== */
 @media (max-width: 768px) {
-    /* Main Layout Grid collapses to single column */
     .screen-main-layout {
-        grid-template-columns: 1fr;
-        height: 100vh;
+        padding-top: 56px;
     }
     
-    /* Sidebar nav hides or behaves as floating bottom bar */
-    .sidebar-nav {
-        flex-direction: row;
-        width: 100vw;
-        height: 60px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        z-index: 900;
-        padding: 0;
-        background: rgba(7, 5, 14, 0.95);
-        border-top: 1px solid var(--border-glass);
-        border-right: none;
+    .fb-top-nav {
+        height: 56px;
+        padding: 0 0.8rem;
     }
     
-    .brand {
+    .fb-logo-text {
         display: none;
     }
     
-    .nav-menu {
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-        gap: 0;
+    .fb-logo-emoji {
+        font-size: 1.5rem;
     }
     
-    .nav-item {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.2rem;
-        font-size: 0; /* hides label on mobile menu */
-        border-radius: 0;
-        flex: 1;
-        padding: 0.4rem 0;
-        border-left: none;
+    .fb-middle {
+        margin: 0 0.2rem;
+        gap: 0 !important;
     }
     
-    .nav-item i {
-        font-size: 1.3rem;
+    .fb-middle .nav-item {
+        padding: 0.4rem 0.35rem;
     }
     
-    .nav-item.active {
-        border-left: none;
-        border-bottom: 3px solid var(--color-magenta);
-        background: transparent;
-        color: var(--color-magenta);
+    .fb-middle .nav-item span {
+        display: none; /* Hide tab labels on mobile */
     }
     
-    .badge {
-        position: absolute;
-        top: 4px;
-        right: 15%;
-        margin-left: 0;
-        font-size: 0.65rem;
+    .fb-middle .nav-item i {
+        font-size: 1.2rem;
+    }
+    
+    .fb-right .btn-icon span {
+        display: none; /* Hide admin button text */
+    }
+    
+    .fb-right {
+        gap: 0.3rem;
     }
     
     .main-content {
-        height: calc(100vh - 60px);
+        height: calc(100vh - 56px);
     }
     
     .tab-pane {
         padding: 1rem;
     }
     
-    .app-header {
-        padding: 0.8rem 1.2rem;
+    .workspace-header {
+        padding: 0.6rem 1rem 0.3rem 1rem;
     }
     
-    /* Floating exit admin button layout */
+    .workspace-header h2 {
+        font-size: 1.15rem;
+    }
+    
     .admin-panel-container {
         height: calc(100vh - 20px);
         margin: 10px auto;

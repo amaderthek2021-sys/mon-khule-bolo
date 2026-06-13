@@ -234,7 +234,7 @@
 
                     <!-- Profile Avatar Row -->
                     <div class="form-group mt-1">
-                        <label>একটি প্রোফাইল অ্যাভাটার বেছে নিন (Choose Avatar)</label>
+                        <label>একটি প্রোফাইল অ্যাভাটার বেছে নিন (Choose Avatar / Upload Photo)</label>
                         <div class="avatar-select-container">
                             <div class="avatar-option selected" data-avatar="avatar1" onclick="selectAvatar('avatar1')">👩🏻</div>
                             <div class="avatar-option" data-avatar="avatar2" onclick="selectAvatar('avatar2')">👧🏽</div>
@@ -242,21 +242,29 @@
                             <div class="avatar-option" data-avatar="avatar4" onclick="selectAvatar('avatar4')">🙋‍♀️</div>
                             <div class="avatar-option" data-avatar="avatar5" onclick="selectAvatar('avatar5')">👩🏼‍💼</div>
                             <div class="avatar-option" data-avatar="avatar_antigravity" onclick="selectAvatar('avatar_antigravity')">👽</div>
+                            <!-- Custom Profile Picture Upload Option -->
+                            <div class="avatar-option avatar-upload-option" id="avatar-upload-trigger" data-avatar="avatar_custom" onclick="triggerProfilePicUpload()" title="গ্যালারি থেকে ফটো আপলোড করুন">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <input type="file" id="real-profile-pic-input" accept="image/*" style="display:none;" onchange="handleRealProfilePic(event)">
                         </div>
                     </div>
 
-                    <!-- Verification photo mock uploads -->
+                    <!-- Verification photo real uploads -->
                     <div class="verification-area mt-1 glass-inner">
                         <h4>🛡️ সেফটি ভেরিফিকেশন (Safety Verification)</h4>
-                        <p class="text-small">নিরাপত্তার স্বার্থে আপনার রিয়েল-টাইম সেলফি এবং ৩টি গ্যালারি ফটো আবশ্যক। (ছবিগুলি মক করা হবে)</p>
+                        <p class="text-small">নিরাপত্তার স্বার্থে আপনার রিয়েল-টাইম সেলফি এবং ৩টি গ্যালারি ফটো আবশ্যক।</p>
                         
                         <div class="verify-buttons">
-                            <button type="button" class="btn btn-secondary btn-small" id="btn-selfie" onclick="simulateSelfie()">
+                            <button type="button" class="btn btn-secondary btn-small" id="btn-selfie" onclick="triggerRealSelfie()">
                                 <i class="fas fa-camera"></i> সেলফি তুলুন (Take Selfie)
                             </button>
-                            <button type="button" class="btn btn-secondary btn-small" id="btn-gallery" onclick="simulateGallery()">
+                            <input type="file" id="real-selfie-input" accept="image/*" capture="user" style="display:none;" onchange="handleRealSelfie(event)">
+                            
+                            <button type="button" class="btn btn-secondary btn-small" id="btn-gallery" onclick="triggerRealGallery()">
                                 <i class="fas fa-images"></i> ৩টি ফটো আপলোড (3 Photos)
                             </button>
+                            <input type="file" id="real-gallery-input" accept="image/*" multiple style="display:none;" onchange="handleRealGallery(event)">
                         </div>
                         <div class="verify-status mt-05">
                             <span id="selfie-status" class="status-badge red">সেলফি বাকি ❌</span>
@@ -300,37 +308,64 @@
         <!-- ========================================== -->
         <section id="screen-main" class="screen-main-layout">
             
-            <!-- Side Navigation Drawer (Desktop) -->
-            <aside class="sidebar-nav glass">
-                <div class="brand">
-                    <span class="brand-emoji">🤫</span>
-                    <h3>মন খুলে বলো</h3>
+            <!-- Facebook-like Top Navigation Bar -->
+            <header class="fb-top-nav glass">
+                <div class="fb-left">
+                    <span class="fb-logo-emoji">🤫</span>
+                    <span class="fb-logo-text font-outfit">মন খুলে বলো</span>
                 </div>
-                <div class="nav-menu">
-                    <a href="#" class="nav-item active" data-tab="home" onclick="switchTab('home')"><i class="fas fa-home"></i> হোম ফিড</a>
-                    <a href="#" class="nav-item" data-tab="explore" onclick="switchTab('explore')"><i class="fas fa-search"></i> অনুসন্ধান</a>
-                    <a href="#" class="nav-item" data-tab="categories" onclick="switchTab('categories')"><i class="fas fa-list"></i> ক্যাটাগরি</a>
-                    <a href="#" class="nav-item" data-tab="notifications" onclick="switchTab('notifications')"><i class="fas fa-bell"></i> নোটিফিকেশন <span id="badge-notif" class="badge"></span></a>
-                    <a href="#" class="nav-item" data-tab="messages" onclick="switchTab('messages')"><i class="fas fa-envelope"></i> মেসেজসমূহ</a>
-                    <a href="#" class="nav-item" data-tab="random-chat" onclick="switchTab('random-chat')"><i class="fas fa-lock"></i> র‍্যান্ডম চ্যাট</a>
-                    <a href="#" class="nav-item" data-tab="download-app" onclick="switchTab('download-app')"><i class="fas fa-mobile-alt text-cyan"></i> অ্যাপ ডাউনলোড</a>
-                    <a href="#" class="nav-item" data-tab="profile" onclick="switchTab('profile')"><i class="fas fa-user"></i> প্রোফাইল</a>
-                    <a href="#" class="nav-item text-red mt-auto" onclick="logout()"><i class="fas fa-sign-out-alt"></i> লগআউট</a>
+                
+                <nav class="fb-middle nav-menu">
+                    <a href="#" class="nav-item active" data-tab="home" onclick="switchTab('home')">
+                        <i class="fas fa-home"></i> <span>হোম</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="explore" onclick="switchTab('explore')">
+                        <i class="fas fa-search"></i> <span>অনুসন্ধান</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="categories" onclick="switchTab('categories')">
+                        <i class="fas fa-list"></i> <span>ক্যাটাগরি</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="notifications" onclick="switchTab('notifications')">
+                        <i class="fas fa-bell"></i> <span>নোটিফিকেশন</span>
+                        <span id="badge-notif" class="badge" style="display:none;">0</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="messages" onclick="switchTab('messages')">
+                        <i class="fas fa-envelope"></i> <span>মেসেজ</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="random-chat" onclick="switchTab('random-chat')">
+                        <i class="fas fa-user-friends"></i> <span>র‍্যান্ডম চ্যাট</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="download-app" onclick="switchTab('download-app')">
+                        <i class="fas fa-mobile-alt text-cyan"></i> <span>অ্যাপ ডাউনলোড</span>
+                    </a>
+                    <a href="#" class="nav-item" data-tab="profile" onclick="switchTab('profile')">
+                        <i class="fas fa-user"></i> <span>প্রোফাইল</span>
+                    </a>
+                </nav>
+                
+                <div class="fb-right">
+                    <button class="btn-icon" id="btn-admin-panel" style="display:none;" onclick="showAdminPanel()">
+                        <i class="fas fa-cogs text-magenta"></i> <span>Admin</span>
+                    </button>
+                    <button class="btn-icon" onclick="toggleLanguage()">
+                        <i class="fas fa-globe"></i> <span id="lang-indicator">BN</span>
+                    </button>
+                    <button class="btn-icon" onclick="toggleTheme()">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                    <button class="btn-icon text-red" onclick="logout()" title="লগআউট">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
                 </div>
-            </aside>
+            </header>
 
             <!-- Main Workspace Area -->
             <main class="main-content">
                 
-                <!-- Main Header Bar -->
-                <header class="app-header glass">
+                <!-- Page Title Workspace Header -->
+                <div class="workspace-header">
                     <h2 id="header-title">হোম ফিড (Home Feed)</h2>
-                    <div class="header-right">
-                        <button class="btn-icon" id="btn-admin-panel" style="display:none;" onclick="showAdminPanel()"><i class="fas fa-cogs text-magenta"></i> Admin</button>
-                        <button class="btn-icon" onclick="toggleLanguage()"><i class="fas fa-globe"></i> <span id="lang-indicator">BN</span></button>
-                        <button class="btn-icon" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
-                    </div>
-                </header>
+                </div>
 
                 <!-- Scrollable Tab Container -->
                 <div class="tab-pane">
@@ -717,24 +752,7 @@
     <!-- 7. FLOATING DIALOGS & LIGHTBOXES -->
     <!-- ========================================== -->
 
-    <!-- Web Camera Selfie Simulator Dialog -->
-    <div id="dialog-selfie-capture" class="dialog-overlay" style="display:none;">
-        <div class="dialog-box glass">
-            <h3>📸 সেলফি ক্যামেরা সিমুলেটর</h3>
-            <div class="neon-line mb-1"></div>
-            
-            <div class="camera-lens-box">
-                <span class="lens-reflection">🙋‍♀️</span>
-                <p>ক্যামেরা চালু হচ্ছে...</p>
-                <div class="face-guideline"></div>
-            </div>
-            
-            <div class="btn-group mt-1">
-                <button class="btn btn-primary" onclick="captureSimulatedSelfie()"><i class="fas fa-camera"></i> ক্যাপচার করুন</button>
-                <button class="btn btn-secondary" onclick="closeSelfieDialog()">বাতিল</button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- User Inspection Dialog (Verify Account Detail View) -->
     <div id="dialog-user-inspect" class="dialog-overlay" style="display:none;">

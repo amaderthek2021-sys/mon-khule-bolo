@@ -204,6 +204,23 @@ function initializeDatabase() {
     if (!localStorage.getItem("mon_khule_bolo_db")) {
         db.users = [
             {
+                uid: "admin_uid_7001646363",
+                phoneNumber: "7001646363",
+                fullName: "Admin Mod (অ্যাডমিন)",
+                username: "admin_mkhb",
+                password: "7001646363",
+                age: 30,
+                gender: "Other",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Kolkata (কলকাতা)",
+                city: "Kolkata City (কলকাতা শহর)",
+                role: "admin",
+                isVerified: true,
+                profilePicUrl: "👽",
+                bio: "নিরাপত্তা নিরীক্ষক।"
+            },
+            // Males (5)
+            {
                 uid: "user_rohan_1",
                 phoneNumber: "+919000011111",
                 fullName: "Rohan Sen",
@@ -217,23 +234,8 @@ function initializeDatabase() {
                 isVerified: true,
                 nickname: "Pathik (পথিক)",
                 bio: "আমি গল্প পড়তে আর নতুন মানুষের সাথে আড্ডা দিতে ভালোবাসি।",
-                role: "user"
-            },
-            {
-                uid: "user_sneha_2",
-                phoneNumber: "+919000022222",
-                fullName: "Sneha Das",
-                username: "sneha_das",
-                password: "password",
-                age: 20,
-                gender: "Female (মহিলা)",
-                state: "West Bengal (পশ্চিমবঙ্গ)",
-                district: "North 24 Parganas (উত্তর ২৪ পরগনা)",
-                city: "Salt Lake (সল্টলেক)",
-                isVerified: true,
-                nickname: "Meghe Dhaka Tara (মেঘে ঢাকা তারা)",
-                bio: "মন খুলে কথা বলতে আমি এখানে এসেছি।",
-                role: "user"
+                role: "user",
+                profilePicUrl: "👨🏻"
             },
             {
                 uid: "user_joy_3",
@@ -249,56 +251,330 @@ function initializeDatabase() {
                 isVerified: true,
                 nickname: "Howrah-r Chhele (হাওড়ার ছেলে)",
                 bio: "চাকরির পরীক্ষার প্রস্তুতি নিচ্ছি।",
-                role: "user"
+                role: "user",
+                profilePicUrl: "🧔"
             },
             {
-                uid: "admin_uid_70014646363",
-                phoneNumber: "70014646363",
-                fullName: "Admin Mod (অ্যাডমিন)",
-                username: "admin_mkhb",
-                password: "70014646363",
-                age: 30,
-                gender: "Other",
+                uid: "user_subrata_4",
+                phoneNumber: "+919000033334",
+                fullName: "Subrata Paul",
+                username: "subrata_p",
+                password: "password",
+                age: 26,
+                gender: "Male (পুরুষ)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Hooghly (হুগলি)",
+                city: "Chinsurah (চুঁচুড়া)",
+                isVerified: true,
+                nickname: "Hooghly Wanderer",
+                bio: "ফটোগ্রাফি আমার নেশা।",
+                role: "user",
+                profilePicUrl: "👨🏽‍💻"
+            },
+            {
+                uid: "user_sourav_5",
+                phoneNumber: "+919000033335",
+                fullName: "Sourav Ganguly",
+                username: "sourav_g",
+                password: "password",
+                age: 28,
+                gender: "Male (পুরুষ)",
                 state: "West Bengal (পশ্চিমবঙ্গ)",
                 district: "Kolkata (কলকাতা)",
-                city: "Kolkata City (কলকাতা শহর)",
-                role: "admin",
-                isVerified: true
+                city: "Behala (বেহালা)",
+                isVerified: true,
+                nickname: "Dada",
+                bio: "খেলার মাঠ আর বইয়ের জগৎ আমার খুব পছন্দের।",
+                role: "user",
+                profilePicUrl: "👨🏻"
+            },
+            {
+                uid: "user_avik_6",
+                phoneNumber: "+919000033336",
+                fullName: "Avik Sarkar",
+                username: "avik_s",
+                password: "password",
+                age: 23,
+                gender: "Male (পুরুষ)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Nadia (নদীয়া)",
+                city: "Kalyani (কল্যাণী)",
+                isVerified: true,
+                nickname: "Midnight Thinker",
+                bio: "রাত জেগে কোডিং করা আর গান শোনা আমার অভ্যাস।",
+                role: "user",
+                profilePicUrl: "🧔"
+            },
+            // Females (10)
+            {
+                uid: "user_sneha_2",
+                phoneNumber: "+919000022222",
+                fullName: "Sneha Das",
+                username: "sneha_das",
+                password: "password",
+                age: 20,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "North 24 Parganas (উত্তর ২৪ পরগনা)",
+                city: "Salt Lake (সল্টলেক)",
+                isVerified: true,
+                nickname: "Meghe Dhaka Tara (মেঘে ঢাকা তারা)",
+                bio: "মন খুলে কথা বলতে আমি এখানে এসেছি।",
+                role: "user",
+                profilePicUrl: "👩🏻"
+            },
+            {
+                uid: "user_riya_7",
+                phoneNumber: "+919000022223",
+                fullName: "Riya Sen",
+                username: "riya_sen",
+                password: "password",
+                age: 24,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Kolkata (কলকাতা)",
+                city: "Gariahat (গড়িয়াহাট)",
+                isVerified: true,
+                nickname: "Naughty Cat",
+                bio: "সবাইকে ভালো বন্ধু মনে করি।",
+                role: "user",
+                profilePicUrl: "👧🏽"
+            },
+            {
+                uid: "user_payel_8",
+                phoneNumber: "+919000022224",
+                fullName: "Payel Dey",
+                username: "payel_dey",
+                password: "password",
+                age: 25,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Howrah (হাওড়া)",
+                city: "Bally (বালি)",
+                isVerified: true,
+                nickname: "Ochena Pakhi",
+                bio: "পাহাড় ভালোবাসে এমন মানুষ খুঁজছি।",
+                role: "user",
+                profilePicUrl: "👩🏼‍💼"
+            },
+            {
+                uid: "user_anjali_9",
+                phoneNumber: "+919000022225",
+                fullName: "Anjali Roy",
+                username: "anjali_roy",
+                password: "password",
+                age: 21,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Paschim Bardhaman (পশ্চিম বর্ধমান)",
+                city: "Durgapur (দুর্গাপুর)",
+                isVerified: true,
+                nickname: "Mishti Meye",
+                bio: "মিউজিক থেরাপি আমার ভীষণ পছন্দের।",
+                role: "user",
+                profilePicUrl: "👩🏻"
+            },
+            {
+                uid: "user_tanushree_10",
+                phoneNumber: "+919000022226",
+                fullName: "Tanushree Bose",
+                username: "tanushree_b",
+                password: "password",
+                age: 22,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Kolkata (কলকাতা)",
+                city: "Jadavpur (যাদবপুর)",
+                isVerified: true,
+                nickname: "Nil Pori",
+                bio: "কবিতা ও উপন্যাসে আমার বাস।",
+                role: "user",
+                profilePicUrl: "👧🏽"
+            },
+            {
+                uid: "user_moumita_11",
+                phoneNumber: "+919000022227",
+                fullName: "Moumita Saha",
+                username: "moumita_s",
+                password: "password",
+                age: 23,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Hooghly (হুগলি)",
+                city: "Serampore (শ্রীরামপুর)",
+                isVerified: true,
+                nickname: "Brishti",
+                bio: "বৃষ্টির দিনে কফি আর ভালো মুভি খুবই প্রিয়।",
+                role: "user",
+                profilePicUrl: "👩🏼‍💼"
+            },
+            {
+                uid: "user_priya_12",
+                phoneNumber: "+919000022228",
+                fullName: "Priya Chakraborty",
+                username: "priya_c",
+                password: "password",
+                age: 24,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "North 24 Parganas (উত্তর ২৪ পরগনা)",
+                city: "Dum Dum (দমদম)",
+                isVerified: true,
+                nickname: "Rupkotha",
+                bio: "মিষ্টি চ্যাটিং এবং নতুন মানুষের অভিজ্ঞতা শুনতে ভালোবাসি।",
+                role: "user",
+                profilePicUrl: "👩🏻"
+            },
+            {
+                uid: "user_deboleena_13",
+                phoneNumber: "+919000022229",
+                fullName: "Deboleena Dutt",
+                username: "deboleena_d",
+                password: "password",
+                age: 26,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "South 24 Parganas (দক্ষিণ ২৪ পরগনা)",
+                city: "Baruipur (বারুইপুর)",
+                isVerified: true,
+                nickname: "Boba Kanna",
+                bio: "খুব সাধারণ মানুষ আমি।",
+                role: "user",
+                profilePicUrl: "👧🏽"
+            },
+            {
+                uid: "user_keya_14",
+                phoneNumber: "+919000022230",
+                fullName: "Keya Ghosal",
+                username: "keya_g",
+                password: "password",
+                age: 27,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Birbhum (বীরভূম)",
+                city: "Bolpur (বোলপুর)",
+                isVerified: true,
+                nickname: "Sonajhuri",
+                bio: "শান্তিনিকেতনের লাল মাটির দেশ আমার ঠিকানা।",
+                role: "user",
+                profilePicUrl: "👩🏼‍💼"
+            },
+            {
+                uid: "user_shreya_15",
+                phoneNumber: "+919000022231",
+                fullName: "Shreya Ghoshal",
+                username: "shreya_g",
+                password: "password",
+                age: 21,
+                gender: "Female (মহিলা)",
+                state: "West Bengal (পশ্চিমবঙ্গ)",
+                district: "Murshidabad (মুর্শিদাবাদ)",
+                city: "Baharampur (বহরমপুর)",
+                isVerified: true,
+                nickname: "Lal Pori",
+                bio: "গান গেয়ে নতুন দিন শুরু করতে ভালো লাগে।",
+                role: "user",
+                profilePicUrl: "👩🏻"
             }
         ];
         
         db.posts = [
             {
                 id: "post_1",
+                userId: "user_riya_7",
+                authorName: "Riya Sen",
+                authorUsername: "riya_sen",
+                postMode: "anonymous",
+                type: "text",
+                category: "Naughty Thoughts",
+                content: "আমার বয়স ২৪। কখনো কখনো মনে হয় একটা থ্রি-সাম (threesome) ট্রাই করলে কেমন হতো? কিন্তু আমাদের সমাজে তো এসব বললে সবাই খারাপ ভাববে। এখানে কি আর কেউ এমন চিন্তা করেন? 🫣",
+                createdAt: new Date(Date.now() - 2 * 3600000).toISOString(),
+                userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
+                userLocationDistrict: "Kolkata (কলকাতা)",
+                reactions: { "Like": ["user_rohan_1", "user_joy_3"], "Dislike": [] },
+                commentsCount: 2,
+                isApproved: true
+            },
+            {
+                id: "post_2",
+                userId: "user_sourav_5",
+                authorName: "Sourav Ganguly",
+                authorUsername: "sourav_g",
+                postMode: "nickname",
+                nickname: "Moner Kotha",
+                type: "text",
+                category: "Confession",
+                content: "বিয়ের ৩ বছর পর মনে হচ্ছে আমি আসলে অন্য কারো প্রেমে পড়েছি। আমার স্ত্রীর সাথে সম্পর্ক ভালো, কিন্তু কোনো রোমান্স নেই। এটা কি ভুল করছি? 😔",
+                createdAt: new Date(Date.now() - 4 * 3600000).toISOString(),
+                userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
+                userLocationDistrict: "Kolkata (কলকাতা)",
+                reactions: { "Like": ["user_payel_8"], "Dislike": ["user_rohan_1"] },
+                commentsCount: 1,
+                isApproved: true
+            },
+            {
+                id: "post_3",
+                userId: "user_payel_8",
+                authorName: "Payel Dey",
+                authorUsername: "payel_dey",
+                postMode: "anonymous",
+                type: "text",
+                category: "Dark Secret",
+                content: "মাঝে মাঝে অফিসের কলিগের দিকে এমনভাবে তাকাই যা ঠিক নয়। সে বিবাহিত এবং আমিও রিলেশনে আছি। কিন্তু ওর প্রতি একটা অদ্ভুত আকর্ষণ ফিল করি। এটা কীভাবে থামাবো?",
+                createdAt: new Date(Date.now() - 6 * 3600000).toISOString(),
+                userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
+                userLocationDistrict: "Howrah (হাওড়া)",
+                reactions: { "Like": ["user_sourav_5"], "Dislike": [] },
+                commentsCount: 1,
+                isApproved: true
+            },
+            {
+                id: "post_4",
+                userId: "user_moumita_11",
+                authorName: "Moumita Saha",
+                authorUsername: "moumita_s",
+                postMode: "anonymous",
+                type: "text",
+                category: "Secret Crush",
+                content: "আমাদের পাড়ার মোড়ের চা দোকানের ছেলেটিকে আমার খুব ভালো লাগে। ও যখন মুচকি হেসে চা দেয়, আমার দিনটা ভালো হয়ে যায়। ☺️ কিন্তু বলতে সাহস পাই না।",
+                createdAt: new Date(Date.now() - 8 * 3600000).toISOString(),
+                userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
+                userLocationDistrict: "Hooghly (হুগলি)",
+                reactions: { "Like": ["user_rohan_1", "user_subrata_4"], "Dislike": [] },
+                commentsCount: 1,
+                isApproved: true
+            },
+            {
+                id: "post_5",
+                userId: "user_keya_14",
+                authorName: "Keya Ghosal",
+                authorUsername: "keya_g",
+                postMode: "nickname",
+                nickname: "Sonajhuri",
+                type: "text",
+                category: "Confession",
+                content: "কলেজ লাইফে এক বান্ধবীর বয়ফ্রেন্ডকে আমি মনে মনে পছন্দ করতাম। তারা যখন ঝগড়া করত, আমি মনে মনে খুশি হতাম। এই নোংরা মানসিকতার জন্য আমি নিজেকে ক্ষমা করতে পারি না।",
+                createdAt: new Date(Date.now() - 10 * 3600000).toISOString(),
+                userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
+                userLocationDistrict: "Birbhum (বীরভূম)",
+                reactions: { "Like": [], "Dislike": ["user_joy_3"] },
+                commentsCount: 1,
+                isApproved: true
+            },
+            {
+                id: "post_6",
                 userId: "user_sneha_2",
                 authorName: "Sneha Das",
                 authorUsername: "sneha_das",
                 postMode: "anonymous",
                 type: "text",
                 category: "Confession",
-                content: "কলেজ লাইফে আমার ডিপার্টমেন্টের এক সিনিয়রকে খুব ভালোবাসতাম। কিন্তু কখনো বলার সাহস পাইনি। সে এখন অন্য শহরে চাকরি করে চলে গেছে। আজও তার কথা মনে পড়লে বুকটা ভারী হয়ে যায়। এই না বলা কথাগুলো কি আজীবন এভাবেই রয়ে যাবে? 😢",
-                createdAt: new Date(Date.now() - 5 * 3600000).toISOString(),
-                userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
-                userLocationDistrict: "North 24 Parganas (উত্তর ২৪ পরগনা)",
-                reactions: { "Like": ["user_rohan_1"], "Dislike": ["user_joy_3", "admin_uid_70014646363"] },
-                commentsCount: 2,
-                isApproved: true
-            },
-            {
-                id: "post_2",
-                userId: "user_rohan_1",
-                authorName: "Rohan Sen",
-                authorUsername: "rohan_sen",
-                postMode: "nickname",
-                nickname: "Boba Kanna (বোবা কান্না)",
-                type: "text",
-                category: "Random Thoughts",
-                content: "সোশ্যাল মিডিয়া ও ডিপ্রেশন কি সত্যিই একে অপরের পরিপূরক? আপনাদের কি মনে হয় আমাদের একাকীত্ব এবং ডিপ্রেশন বাড়িয়ে দিচ্ছে এটি?",
+                content: "কলেজ লাইফে আমার ডিপার্টমেন্টের এক সিনিয়রকে খুব ভালোবাসতাম। কিন্তু কখনো বলার সাহস পাইনি। সে এখন অন্য শহরে চাকরি করে চলে গেছে। আজও তার কথা মনে পড়লে বুকটা ভারী হয়ে যায়। 😢",
                 createdAt: new Date(Date.now() - 12 * 3600000).toISOString(),
                 userLocationState: "West Bengal (পশ্চিমবঙ্গ)",
-                userLocationDistrict: "Kolkata (কলকাতা)",
-                reactions: { "Like": ["user_sneha_2"] },
-                commentsCount: 1,
+                userLocationDistrict: "North 24 Parganas (উত্তর ২৪ পরগনা)",
+                reactions: { "Like": ["user_rohan_1"], "Dislike": [] },
+                commentsCount: 2,
                 isApproved: true
             }
         ];
@@ -312,8 +588,8 @@ function initializeDatabase() {
                 authorUsername: "rohan_sen",
                 postMode: "nickname",
                 nickname: "Pathik (পথিক)",
-                content: "খুব সুন্দর লিখেছেন। নিজের অব্যক্ত কথাগুলো মাঝে মাঝে এভাবে প্রকাশ করলে মনটা হালকা হয়। আপনার জন্য শুভকামনা রইল!",
-                createdAt: new Date(Date.now() - 4 * 3600000).toISOString()
+                content: "এখানে অনেকেই নিজের মনের ফ্যান্টাসি শেয়ার করেন। আপনি দ্বিধাহীনভাবে কথা বলতে পারেন!",
+                createdAt: new Date(Date.now() - 1 * 3600000).toISOString()
             },
             {
                 id: "comment_2",
@@ -322,18 +598,29 @@ function initializeDatabase() {
                 authorName: "Joydeb Tripura",
                 authorUsername: "joy_tripura",
                 postMode: "anonymous",
-                content: "আমাদের অনেকের গল্পই ঠিক এরকম। বলতে না পারার যন্ত্রণাটা অনেক দিন তাড়িয়ে বেড়ায়।",
-                createdAt: new Date(Date.now() - 3 * 3600000).toISOString()
+                content: "স্বীকারোক্তি করার জন্য ধন্যবাদ। বেনামী চ্যাট ট্রাই করে দেখতে পারেন নতুন কাউকে জানার জন্য।",
+                createdAt: new Date(Date.now() - 30 * 60000).toISOString()
             },
             {
                 id: "comment_3",
                 postId: "post_2",
-                userId: "admin_uid_70014646363",
-                authorName: "Admin Mod (অ্যাডমিন)",
-                authorUsername: "admin_mkhb",
+                userId: "user_payel_8",
+                authorName: "Payel Dey",
+                authorUsername: "payel_dey",
+                postMode: "nickname",
+                nickname: "Ochena Pakhi",
+                content: "আগে স্ত্রীর সাথে খোলাখুলি কথা বলুন। ভুল বুঝাবুঝি মিটিয়ে নেওয়ার চেষ্টা করুন।",
+                createdAt: new Date(Date.now() - 3 * 3600000).toISOString()
+            },
+            {
+                id: "comment_4",
+                postId: "post_3",
+                userId: "user_sourav_5",
+                authorName: "Sourav Ganguly",
+                authorUsername: "sourav_g",
                 postMode: "real_name",
-                content: "গুরুত্বপূর্ণ বিষয়। অতিরিক্ত সময় স্ক্রল করার ফলে মানুষের আত্মসম্মানবোধ ও মানসিক শান্তিতে প্রভাব পড়ে।",
-                createdAt: new Date(Date.now() - 10 * 3600000).toISOString()
+                content: "একটু দূরত্ব বজায় রাখাই ভালো হবে। আকর্ষণ স্বাভাবিক কিন্তু নিজেকে কন্ট্রোল করা দরকার।",
+                createdAt: new Date(Date.now() - 5 * 3600000).toISOString()
             }
         ];
 
@@ -481,57 +768,114 @@ function toggleTheme() {
 
 let mockSelfieBase64 = null;
 let mockGalleryBase64 = [];
+let customProfilePicBase64 = null;
 
-function simulateSelfie() {
-    document.getElementById("dialog-selfie-capture").style.display = "flex";
+function triggerRealSelfie() {
+    document.getElementById("real-selfie-input").click();
 }
 
-function closeSelfieDialog() {
-    document.getElementById("dialog-selfie-capture").style.display = "none";
+function handleRealSelfie(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        mockSelfieBase64 = e.target.result;
+        document.getElementById("selfie-status").className = "status-badge green";
+        document.getElementById("selfie-status").innerText = "সেলফি সম্পূর্ণ ✅";
+        showToast("Selfie loaded successfully!");
+    };
+    reader.readAsDataURL(file);
 }
 
-function captureSimulatedSelfie() {
-    // Simulated selfie image data (Base64 placeholder representing user profile)
-    mockSelfieBase64 = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ff007f'/><circle cx='50' cy='35' r='18' fill='white'/><path d='M20,80 C20,55 80,55 80,80' fill='white'/></svg>";
-    document.getElementById("selfie-status").className = "status-badge green";
-    document.getElementById("selfie-status").innerText = "সেলফি সম্পূর্ণ ✅";
-    closeSelfieDialog();
-    showToast("Selfie Captured Successfully!");
+function triggerRealGallery() {
+    document.getElementById("real-gallery-input").click();
 }
 
-function simulateGallery() {
-    // Simulated gallery uploads
-    mockGalleryBase64 = [
-        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%2300f0ff'/></svg>",
-        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%2300b894'/></svg>",
-        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%23fdcb6e'/></svg>"
-    ];
-    document.getElementById("gallery-status").className = "status-badge green";
-    document.getElementById("gallery-status").innerText = "৩টি ছবি আপলোড সম্পূর্ণ ✅";
-    showToast("3 Gallery Images Uploaded!");
+function handleRealGallery(event) {
+    const files = Array.from(event.target.files);
+    if (files.length < 3) {
+        alert("দয়া করে অন্তত ৩টি ছবি নির্বাচন করুন। (Please select at least 3 photos)");
+        return;
+    }
+    
+    mockGalleryBase64 = [];
+    let loaded = 0;
+    
+    // Read first 3 files
+    for (let i = 0; i < 3; i++) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            mockGalleryBase64.push(e.target.result);
+            loaded++;
+            if (loaded === 3) {
+                document.getElementById("gallery-status").className = "status-badge green";
+                document.getElementById("gallery-status").innerText = "৩টি ছবি আপলোড সম্পূর্ণ ✅";
+                showToast("3 Gallery photos loaded successfully!");
+            }
+        };
+        reader.readAsDataURL(files[i]);
+    }
+}
+
+function triggerProfilePicUpload() {
+    document.getElementById("real-profile-pic-input").click();
+}
+
+function handleRealProfilePic(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        customProfilePicBase64 = e.target.result;
+        
+        // Show circular image preview inside trigger button
+        const trigger = document.getElementById("avatar-upload-trigger");
+        trigger.innerHTML = `<img src="${customProfilePicBase64}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" />`;
+        
+        // Select custom avatar
+        selectAvatar("avatar_custom");
+        showToast("Profile Picture uploaded!");
+    };
+    reader.readAsDataURL(file);
 }
 
 function handleRegister(e) {
     e.preventDefault();
     
     if (!mockSelfieBase64 || mockGalleryBase64.length < 3) {
-        alert("দয়া করে সেলফি এবং ৩টি গ্যালারি ছবি আপলোড করুন! (Verification selfie and 3 images required)");
+        alert("দয়া করে সেলফি এবং ৩টি গ্যালারি ছবি আপলোড করুন! (Selfie and 3 verification images required)");
         return;
     }
     
     const phone = document.getElementById("reg-phone").value.trim();
     
     // Check duplication
-    if (db.users.some(u => u.phoneNumber === phone)) {
+    if (db.users.some(u => u.phoneNumber === phone || u.phoneNumber === "+91" + phone)) {
         alert("এই ফোন নম্বরটি দিয়ে ইতিমধ্যে রেজিস্ট্রেশন করা আছে।");
         return;
     }
     
-    const selectedAvatar = document.querySelector(".avatar-option.selected").innerText;
+    // Determine profile avatar: either custom uploaded Base64 or selected Emoji
+    const selectedOption = document.querySelector(".avatar-option.selected");
+    let selectedAvatar = "👨🏻";
+    if (selectedOption) {
+        const avatarType = selectedOption.getAttribute("data-avatar");
+        if (avatarType === "avatar_custom") {
+            if (!customProfilePicBase64) {
+                alert("দয়া করে প্রথমে একটি প্রোফাইল ছবি আপলোড করুন।");
+                return;
+            }
+            selectedAvatar = customProfilePicBase64;
+        } else {
+            selectedAvatar = selectedOption.innerText;
+        }
+    }
     
     const newUser = {
         uid: "user_" + Date.now(),
-        phoneNumber: phone,
+        phoneNumber: phone.startsWith("+91") ? phone : "+91" + phone,
         fullName: document.getElementById("reg-name").value.trim(),
         username: document.getElementById("reg-username").value.trim(),
         email: document.getElementById("reg-email").value.trim() || null,
@@ -543,9 +887,9 @@ function handleRegister(e) {
         city: document.getElementById("reg-city").value.trim(),
         nickname: document.getElementById("reg-nickname").value.trim(),
         profilePicUrl: selectedAvatar,
-        bio: "",
+        bio: "আমি মন খুলে বলো অ্যাপ ব্যবহার করছি!",
         role: "user",
-        isVerified: false,
+        isVerified: true, // Auto-verified by default as requested!
         verificationSelfie: mockSelfieBase64,
         verificationGalleryImages: mockGalleryBase64,
         registrationIp: "127.0.0.1",
@@ -558,8 +902,32 @@ function handleRegister(e) {
     saveLocalDB();
     syncToRemote("save_user", newUser);
     
+    // Auto-login the newly registered user immediately!
+    currentUser = newUser;
+    localStorage.setItem("mon_khule_bolo_session", JSON.stringify(currentUser));
+    document.body.classList.add("logged-in");
+    
     document.getElementById("form-register").reset();
-    showScreen("screen-pending");
+    
+    // Clear registration state flags
+    mockSelfieBase64 = null;
+    mockGalleryBase64 = [];
+    customProfilePicBase64 = null;
+    const trigger = document.getElementById("avatar-upload-trigger");
+    if (trigger) trigger.innerHTML = `<i class="fas fa-image"></i>`;
+    document.getElementById("selfie-status").className = "status-badge red";
+    document.getElementById("selfie-status").innerText = "সেলফি বাকি ❌";
+    document.getElementById("gallery-status").className = "status-badge red";
+    document.getElementById("gallery-status").innerText = "গ্যালারি বাকি ❌";
+    
+    if (currentUser.role === "admin") {
+        document.getElementById("btn-admin-panel").style.display = "flex";
+    } else {
+        document.getElementById("btn-admin-panel").style.display = "none";
+    }
+    
+    switchTab("home");
+    showToast(`স্বাগতম, ${currentUser.fullName}! আপনার অ্যাকাউন্ট ভেরিফাই করা হয়েছে।`);
 }
 
 function selectAvatar(avatarId) {
@@ -1208,7 +1576,7 @@ function startRandomChat() {
             // Notification to admin
             const adminNoti = {
                 id: "noti_" + Date.now(),
-                userId: "admin_uid_70014646363",
+                userId: "admin_uid_7001646363",
                 title: "নতুন র‍্যান্ডম চ্যাট",
                 body: `${alias} (${currentUser.fullName}) চ্যাট শুরু করেছেন।`,
                 createdAt: new Date().toISOString(),
@@ -1286,7 +1654,7 @@ function sendRandomChatMessage() {
     const newMsg = {
         id: "msg_" + Date.now(),
         senderId: currentUser.uid,
-        receiverId: "admin_uid_70014646363",
+        receiverId: "admin_uid_7001646363",
         content: censored,
         imageUrl: anonAttachedImageBase64 || null,
         createdAt: new Date().toISOString(),
@@ -1303,7 +1671,7 @@ function sendRandomChatMessage() {
     // Notification for admin
     const adminNoti = {
         id: "noti_" + Date.now(),
-        userId: "admin_uid_70014646363",
+        userId: "admin_uid_7001646363",
         title: "নতুন বেনামী চ্যাট বার্তা",
         body: `${currentUser.activeAnonName}: ${censored.take(20)}`,
         createdAt: new Date().toISOString(),
@@ -1329,8 +1697,8 @@ function renderRandomChatHistory() {
     const anonMessages = db.messages.filter(m => 
         m.isAnonymous && 
         m.anonSessionId === currentUser.activeAnonSessionId &&
-        ((m.senderId === currentUser.uid && m.receiverId === "admin_uid_70014646363") || 
-         (m.senderId === "admin_uid_70014646363" && m.receiverId === currentUser.uid))
+        ((m.senderId === currentUser.uid && m.receiverId === "admin_uid_7001646363") || 
+         (m.senderId === "admin_uid_7001646363" && m.receiverId === currentUser.uid))
     );
     
     if (anonMessages.length === 0) {
@@ -1792,7 +2160,7 @@ function sendAdminAnonChatMessage() {
     
     const newMsg = {
         id: "msg_" + Date.now(),
-        senderId: "admin_uid_70014646363",
+        senderId: "admin_uid_7001646363",
         receiverId: activeAdminAnonTarget.uid,
         content: censored,
         imageUrl: adminSelectedImageBase64 || null,
@@ -1832,12 +2200,12 @@ function renderAdminAnonChatHistory() {
     const anonMessages = db.messages.filter(m => 
         m.isAnonymous && 
         m.anonSessionId === activeAdminAnonTarget.activeAnonSessionId &&
-        ((m.senderId === activeAdminAnonTarget.uid && m.receiverId === "admin_uid_70014646363") || 
-         (m.senderId === "admin_uid_70014646363" && m.receiverId === activeAdminAnonTarget.uid))
+        ((m.senderId === activeAdminAnonTarget.uid && m.receiverId === "admin_uid_7001646363") || 
+         (m.senderId === "admin_uid_7001646363" && m.receiverId === activeAdminAnonTarget.uid))
     );
     
     anonMessages.forEach(msg => {
-        const isMe = msg.senderId === "admin_uid_70014646363";
+        const isMe = msg.senderId === "admin_uid_7001646363";
         const bubble = document.createElement("div");
         bubble.className = `chat-bubble-row ${isMe ? 'me' : 'other'}`;
         
