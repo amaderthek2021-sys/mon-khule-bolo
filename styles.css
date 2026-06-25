@@ -1335,15 +1335,15 @@ body.logged-in #screen-pending {
 }
 
 .chat-bubble-row.me .chat-bubble {
-    background: var(--color-magenta);
-    color: white;
+    background: #f1f5f9;
+    color: #000000;
     border-bottom-right-radius: 0;
 }
 
 .chat-bubble-row.other .chat-bubble {
-    background: var(--bg-glass-inner);
-    border: 1px solid var(--border-glass);
-    color: white;
+    background: #ffe4e6;
+    border: 1px solid #fecdd3;
+    color: #dc2626;
     border-bottom-left-radius: 0;
 }
 
@@ -1359,13 +1359,16 @@ body.logged-in #screen-pending {
 .bubble-time {
     display: block;
     font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.6);
     text-align: right;
     margin-top: 0.2rem;
 }
 
+.chat-bubble-row.me .bubble-time {
+    color: rgba(0, 0, 0, 0.5);
+}
+
 .chat-bubble-row.other .bubble-time {
-    color: var(--text-dim);
+    color: rgba(220, 38, 38, 0.6);
 }
 
 .chat-input-row {

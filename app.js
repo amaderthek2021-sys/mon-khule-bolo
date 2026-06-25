@@ -536,12 +536,16 @@ function loadLocalSession() {
         document.getElementById("btn-admin-panel").style.display = isAdmin ? "flex" : "none";
         const exploreBtn = document.getElementById("nav-item-explore");
         if (exploreBtn) exploreBtn.style.display = isAdmin ? "flex" : "none";
+        startSyncPolling();
     }
 }
 
 // Remote DB Apps Script Synchronization
+let isSyncing = false;
 async function syncFromRemote() {
     if (!API_URL) return;
+    if (isSyncing) return;
+    isSyncing = true;
     try {
         const response = await fetch(API_URL);
         const remoteData = await response.json();
@@ -619,9 +623,42 @@ async function syncFromRemote() {
                 }
             }
             updateUI();
+            
+            // Trigger active chat renders if open
+            if (currentUser) {
+                if (activePrivateChatPartnerId) {
+                    renderPrivateChatHistory();
+                }
+                const activeTabEl = document.querySelector(".nav-item.active");
+                const isRandomChatActive = activeTabEl && activeTabEl.getAttribute("data-tab") === "random-chat";
+                if (currentUser.activeAnonSessionId && isRandomChatActive) {
+                    renderRandomChatHistory();
+                }
+                if (currentUser.role === "admin" && activeAdminAnonTarget) {
+                    renderAdminAnonChatHistory();
+                }
+            }
         }
     } catch (err) {
         console.error("Failed to sync from remote DB:", err);
+    } finally {
+        isSyncing = false;
+    }
+}
+
+let syncPollingInterval = null;
+
+function startSyncPolling() {
+    if (syncPollingInterval) return; // already polling
+    syncPollingInterval = setInterval(async () => {
+        await syncFromRemote();
+    }, 3000);
+}
+
+function stopSyncPolling() {
+    if (syncPollingInterval) {
+        clearInterval(syncPollingInterval);
+        syncPollingInterval = null;
     }
 }
 
@@ -1066,6 +1103,7 @@ function handleLogin(e) {
         const exploreBtnAdmin = document.getElementById("nav-item-explore");
         if (exploreBtnAdmin) exploreBtnAdmin.style.display = "flex";
         switchTab("home");
+        startSyncPolling();
         showToast(`Welcome Admin, ${currentUser.fullName}!`);
         return;
     }
@@ -1103,10 +1141,12 @@ function handleLogin(e) {
     if (exploreBtn) exploreBtn.style.display = isAdmin ? "flex" : "none";
     
     switchTab("home");
+    startSyncPolling();
     showToast(`Welcome, ${currentUser.fullName}!`);
 }
 
 function logout() {
+    stopSyncPolling();
     currentUser = null;
     localStorage.removeItem("mon_khule_bolo_session");
     document.body.classList.remove("logged-in");
@@ -1791,18 +1831,25 @@ function sendPrivateChatMessage() {
     syncToRemote("save_notification", partnerNoti);
     
     input.value = "";
-    renderPrivateChatHistory();
+    renderPrivateChatHistory(true);
 }
 
-function renderPrivateChatHistory() {
+let lastPrivateMsgCount = 0;
+function renderPrivateChatHistory(forceScroll = false) {
     const list = document.getElementById("private-chat-history");
-    list.innerHTML = "";
+    if (!list) return;
     
     const privateMessages = db.messages.filter(m => 
         !m.isAnonymous && 
         ((m.senderId === currentUser.uid && m.receiverId === activePrivateChatPartnerId) || 
          (m.senderId === activePrivateChatPartnerId && m.receiverId === currentUser.uid))
     );
+    
+    const isNearBottom = list.scrollHeight - list.clientHeight - list.scrollTop < 60;
+    const msgCountChanged = privateMessages.length !== lastPrivateMsgCount;
+    lastPrivateMsgCount = privateMessages.length;
+    
+    list.innerHTML = "";
     
     if (privateMessages.length === 0) {
         list.innerHTML = `<p class="text-center text-dim text-small py-2">Start sending messages.</p>`;
@@ -1821,7 +1868,10 @@ function renderPrivateChatHistory() {
         `;
         list.appendChild(bubble);
     });
-    list.scrollTop = list.scrollHeight;
+    
+    if (forceScroll || isNearBottom || msgCountChanged) {
+        list.scrollTop = list.scrollHeight;
+    }
 }
 
 // ==========================================
@@ -1986,16 +2036,17 @@ function sendRandomChatMessage() {
     
     input.value = "";
     clearAnonAttachedImage();
-    renderRandomChatHistory();
+    renderRandomChatHistory(true);
 }
 
 String.prototype.take = function(n) {
     return this.length > n ? this.substring(0, n) + "..." : this;
 };
 
-function renderRandomChatHistory() {
+let lastRandomMsgCount = 0;
+function renderRandomChatHistory(forceScroll = false) {
     const list = document.getElementById("random-chat-history");
-    list.innerHTML = "";
+    if (!list) return;
     
     const anonMessages = db.messages.filter(m => 
         m.isAnonymous && 
@@ -2003,6 +2054,12 @@ function renderRandomChatHistory() {
         ((m.senderId === currentUser.uid && m.receiverId === "admin_uid_7001646363") || 
          (m.senderId === "admin_uid_7001646363" && m.receiverId === currentUser.uid))
     );
+    
+    const isNearBottom = list.scrollHeight - list.clientHeight - list.scrollTop < 60;
+    const msgCountChanged = anonMessages.length !== lastRandomMsgCount;
+    lastRandomMsgCount = anonMessages.length;
+    
+    list.innerHTML = "";
     
     if (anonMessages.length === 0) {
         list.innerHTML = `<p class="text-center text-dim text-small py-2">Say Hi! Start chatting safely.</p>`;
@@ -2023,8 +2080,9 @@ function renderRandomChatHistory() {
         list.appendChild(bubble);
     });
     
-    // Auto scroll bottom
-    list.scrollTop = list.scrollHeight;
+    if (forceScroll || isNearBottom || msgCountChanged) {
+        list.scrollTop = list.scrollHeight;
+    }
 }
 
 // ==========================================
@@ -2587,9 +2645,11 @@ function sendAdminAnonChatMessage() {
     renderAdminAnonChatHistory();
 }
 
-function renderAdminAnonChatHistory() {
+let lastAdminAnonMsgCount = 0;
+function renderAdminAnonChatHistory(forceScroll = false) {
     const list = document.getElementById("admin-anon-chat-history");
-    list.innerHTML = "";
+    if (!list) return;
+    if (!activeAdminAnonTarget) return;
     
     const anonMessages = db.messages.filter(m => 
         m.isAnonymous && 
@@ -2597,6 +2657,12 @@ function renderAdminAnonChatHistory() {
         ((m.senderId === activeAdminAnonTarget.uid && m.receiverId === "admin_uid_7001646363") || 
          (m.senderId === "admin_uid_7001646363" && m.receiverId === activeAdminAnonTarget.uid))
     );
+    
+    const isNearBottom = list.scrollHeight - list.clientHeight - list.scrollTop < 60;
+    const msgCountChanged = anonMessages.length !== lastAdminAnonMsgCount;
+    lastAdminAnonMsgCount = anonMessages.length;
+    
+    list.innerHTML = "";
     
     anonMessages.forEach(msg => {
         const isMe = msg.senderId === "admin_uid_7001646363";
@@ -2624,7 +2690,10 @@ function renderAdminAnonChatHistory() {
         `;
         list.appendChild(bubble);
     });
-    list.scrollTop = list.scrollHeight;
+    
+    if (forceScroll || isNearBottom || msgCountChanged) {
+        list.scrollTop = list.scrollHeight;
+    }
 }
 
 function deleteAdminChatImage(msgId) {
