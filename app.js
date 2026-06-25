@@ -1,6 +1,30 @@
 // Mon Khule Bolo - Web Client Controller
 // Shared Google Apps Script Database Sync Logic
 
+// paste your Firebase configuration keys here for instant WebSocket real-time chat (WhatsApp-style)!
+const firebaseConfig = {
+    apiKey: "AIzaSyCFx3AzOCrcjuih9-TO9HThCYsHWFA3iDE",
+    authDomain: "mon-khule-bolo-6f05d.firebaseapp.com",
+    databaseURL: "https://mon-khule-bolo-6f05d-default-rtdb.asia-southeast1.firebasedatabase.app", // Set to Asia (Singapore) region
+    projectId: "mon-khule-bolo-6f05d",
+    storageBucket: "mon-khule-bolo-6f05d.firebasestorage.app",
+    messagingSenderId: "181043131130",
+    appId: "1:181043131130:web:c0881781f7333dcd4c0f43",
+    measurementId: "G-93FREQJ94N"
+};
+
+let useFirebase = false;
+let database = null;
+
+if (typeof firebase !== "undefined" && firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("REPLACE_")) {
+    firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+    useFirebase = true;
+    console.log("Firebase Realtime Database initialized successfully!");
+} else {
+    console.log("Using Google Sheets database sync engine (Firebase credentials not configured).");
+}
+
 // Paste your deployed Google Apps Script Web App URL here to sync the website and APK databases!
 const API_URL = "https://script.google.com/macros/s/AKfycbzkO2uEkYR3WJLG_eAEkPTcvE0m06C0N7Bovuk1rm-DkNUPaZJHHDw9oLaqJVFLWdVu/exec"; 
 
@@ -650,6 +674,12 @@ let syncPollingInterval = null;
 let chatSyncPollingInterval = null;
 let isChatSyncing = false;
 
+let firebaseMessagesListener = null;
+let firebaseNotificationsListener = null;
+let firebaseChatRequestsListener = null;
+let firebaseFriendRequestsListener = null;
+let firebaseFriendshipsListener = null;
+
 async function syncChatFromRemote() {
     if (!API_URL) return;
     if (isChatSyncing) return;
@@ -686,15 +716,115 @@ async function syncChatFromRemote() {
 }
 
 function startSyncPolling() {
+    // 1. Full database background sync every 15s (always run this to get new posts and comments)
     if (!syncPollingInterval) {
         syncPollingInterval = setInterval(async () => {
             await syncFromRemote();
-        }, 15000); // Full DB sync every 15 seconds
+        }, 15000);
     }
-    if (!chatSyncPollingInterval) {
-        chatSyncPollingInterval = setInterval(async () => {
-            await syncChatFromRemote();
-        }, 1000); // Lightweight chat sync every 1 second (super fast!)
+    
+    // 2. Real-time chat sync
+    if (useFirebase) {
+        if (!firebaseMessagesListener) {
+            firebaseMessagesListener = database.ref('messages').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const list = [];
+                if (data) {
+                    for (let key in data) {
+                        list.push(data[key]);
+                    }
+                }
+                db.messages = list;
+                saveLocalDB();
+                
+                // Trigger active chat renders if open
+                if (currentUser) {
+                    if (activePrivateChatPartnerId) {
+                        renderPrivateChatHistory();
+                    }
+                    const activeTabEl = document.querySelector(".nav-item.active");
+                    const isRandomChatActive = activeTabEl && activeTabEl.getAttribute("data-tab") === "random-chat";
+                    if (currentUser.activeAnonSessionId && isRandomChatActive) {
+                        renderRandomChatHistory();
+                    }
+                    if (currentUser.role === "admin" && activeAdminAnonTarget) {
+                        renderAdminAnonChatHistory();
+                    }
+                }
+            });
+        }
+        if (!firebaseNotificationsListener) {
+            firebaseNotificationsListener = database.ref('notifications').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const list = [];
+                if (data) {
+                    for (let key in data) {
+                        list.push(data[key]);
+                    }
+                }
+                // Reverse to keep newest notifications first
+                db.notifications = list.reverse();
+                saveLocalDB();
+                updateUI();
+            });
+        }
+        if (!firebaseChatRequestsListener) {
+            firebaseChatRequestsListener = database.ref('chatRequests').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const list = [];
+                if (data) {
+                    for (let key in data) {
+                        list.push(data[key]);
+                    }
+                }
+                db.chatRequests = list;
+                saveLocalDB();
+                if (currentUser) {
+                    renderInbox();
+                    renderActiveChats();
+                }
+            });
+        }
+        if (!firebaseFriendRequestsListener) {
+            firebaseFriendRequestsListener = database.ref('friendRequests').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const list = [];
+                if (data) {
+                    for (let key in data) {
+                        list.push(data[key]);
+                    }
+                }
+                db.friendRequests = list;
+                saveLocalDB();
+                if (currentUser) {
+                    renderFriends();
+                    updateUI();
+                }
+            });
+        }
+        if (!firebaseFriendshipsListener) {
+            firebaseFriendshipsListener = database.ref('friendships').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const list = [];
+                if (data) {
+                    for (let key in data) {
+                        list.push(data[key]);
+                    }
+                }
+                db.friendships = list;
+                saveLocalDB();
+                if (currentUser) {
+                    renderFriends();
+                }
+            });
+        }
+    } else {
+        // Fallback: Lightweight chat sync every 1 second (super fast HTTP polling)
+        if (!chatSyncPollingInterval) {
+            chatSyncPollingInterval = setInterval(async () => {
+                await syncChatFromRemote();
+            }, 1000);
+        }
     }
 }
 
@@ -703,9 +833,33 @@ function stopSyncPolling() {
         clearInterval(syncPollingInterval);
         syncPollingInterval = null;
     }
-    if (chatSyncPollingInterval) {
-        clearInterval(chatSyncPollingInterval);
-        chatSyncPollingInterval = null;
+    
+    if (useFirebase) {
+        if (firebaseMessagesListener) {
+            database.ref('messages').off('value', firebaseMessagesListener);
+            firebaseMessagesListener = null;
+        }
+        if (firebaseNotificationsListener) {
+            database.ref('notifications').off('value', firebaseNotificationsListener);
+            firebaseNotificationsListener = null;
+        }
+        if (firebaseChatRequestsListener) {
+            database.ref('chatRequests').off('value', firebaseChatRequestsListener);
+            firebaseChatRequestsListener = null;
+        }
+        if (firebaseFriendRequestsListener) {
+            database.ref('friendRequests').off('value', firebaseFriendRequestsListener);
+            firebaseFriendRequestsListener = null;
+        }
+        if (firebaseFriendshipsListener) {
+            database.ref('friendships').off('value', firebaseFriendshipsListener);
+            firebaseFriendshipsListener = null;
+        }
+    } else {
+        if (chatSyncPollingInterval) {
+            clearInterval(chatSyncPollingInterval);
+            chatSyncPollingInterval = null;
+        }
     }
 }
 
@@ -1764,8 +1918,12 @@ function handleChatRequest(requestId, status) {
     if (!req) return;
     
     req.status = status;
-    saveLocalDB();
-    syncToRemote("save_chat_request", req);
+    if (useFirebase) {
+        database.ref('chatRequests/' + req.id).set(req);
+    } else {
+        saveLocalDB();
+        syncToRemote("save_chat_request", req);
+    }
     
     // Notify sender
     if (status === "accepted") {
@@ -1778,8 +1936,12 @@ function handleChatRequest(requestId, status) {
             type: "system",
             isRead: false
         };
-        db.notifications.unshift(noti);
-        syncToRemote("save_notification", noti);
+        if (useFirebase) {
+            database.ref('notifications/' + noti.id).set(noti);
+        } else {
+            db.notifications.unshift(noti);
+            syncToRemote("save_notification", noti);
+        }
     }
     
     renderInbox();
@@ -1860,9 +2022,13 @@ function sendPrivateChatMessage() {
         isAnonymous: false
     };
     
-    db.messages.push(newMsg);
-    saveLocalDB();
-    syncToRemote("save_message", newMsg);
+    if (useFirebase) {
+        database.ref('messages/' + newMsg.id).set(newMsg);
+    } else {
+        db.messages.push(newMsg);
+        saveLocalDB();
+        syncToRemote("save_message", newMsg);
+    }
     
     // Trigger notifications to partner
     const partnerNoti = {
@@ -1874,8 +2040,12 @@ function sendPrivateChatMessage() {
         type: "message",
         isRead: false
     };
-    db.notifications.unshift(partnerNoti);
-    syncToRemote("save_notification", partnerNoti);
+    if (useFirebase) {
+        database.ref('notifications/' + partnerNoti.id).set(partnerNoti);
+    } else {
+        db.notifications.unshift(partnerNoti);
+        syncToRemote("save_notification", partnerNoti);
+    }
     
     input.value = "";
     renderPrivateChatHistory(true);
@@ -2064,9 +2234,13 @@ function sendRandomChatMessage() {
         anonName: currentUser.activeAnonName
     };
     
-    db.messages.push(newMsg);
-    saveLocalDB();
-    syncToRemote("save_message", newMsg);
+    if (useFirebase) {
+        database.ref('messages/' + newMsg.id).set(newMsg);
+    } else {
+        db.messages.push(newMsg);
+        saveLocalDB();
+        syncToRemote("save_message", newMsg);
+    }
     
     // Notification for admin
     const adminNoti = {
@@ -2078,8 +2252,12 @@ function sendRandomChatMessage() {
         type: "system",
         isRead: false
     };
-    db.notifications.unshift(adminNoti);
-    syncToRemote("save_notification", adminNoti);
+    if (useFirebase) {
+        database.ref('notifications/' + adminNoti.id).set(adminNoti);
+    } else {
+        db.notifications.unshift(adminNoti);
+        syncToRemote("save_notification", adminNoti);
+    }
     
     input.value = "";
     clearAnonAttachedImage();
@@ -2670,9 +2848,13 @@ function sendAdminAnonChatMessage() {
         anonName: activeAdminAnonTarget.activeAnonName
     };
     
-    db.messages.push(newMsg);
-    saveLocalDB();
-    syncToRemote("save_message", newMsg);
+    if (useFirebase) {
+        database.ref('messages/' + newMsg.id).set(newMsg);
+    } else {
+        db.messages.push(newMsg);
+        saveLocalDB();
+        syncToRemote("save_message", newMsg);
+    }
     
     // Notification for user
     const userNoti = {
@@ -2684,8 +2866,12 @@ function sendAdminAnonChatMessage() {
         type: "system",
         isRead: false
     };
-    db.notifications.unshift(userNoti);
-    syncToRemote("save_notification", userNoti);
+    if (useFirebase) {
+        database.ref('notifications/' + userNoti.id).set(userNoti);
+    } else {
+        db.notifications.unshift(userNoti);
+        syncToRemote("save_notification", userNoti);
+    }
     
     input.value = "";
     clearAdminAttachedImage();
@@ -2744,9 +2930,13 @@ function renderAdminAnonChatHistory(forceScroll = false) {
 }
 
 function deleteAdminChatImage(msgId) {
-    db.messages = db.messages.filter(m => m.id !== msgId);
-    saveLocalDB();
-    syncToRemote("delete_message", msgId);
+    if (useFirebase) {
+        database.ref('messages/' + msgId).remove();
+    } else {
+        db.messages = db.messages.filter(m => m.id !== msgId);
+        saveLocalDB();
+        syncToRemote("delete_message", msgId);
+    }
     showToast("Message deleted successfully!");
     renderAdminAnonChatHistory();
 }
@@ -3118,8 +3308,12 @@ function handleFriendRequest(requestId, status) {
             user2Id: req.receiverId,
             createdAt: new Date().toISOString()
         };
-        db.friendships.push(friendship);
-        syncToRemote("save_friendship", friendship);
+        if (useFirebase) {
+            database.ref('friendships/' + friendship.id).set(friendship);
+        } else {
+            db.friendships.push(friendship);
+            syncToRemote("save_friendship", friendship);
+        }
         
         // Notify sender
         const noti = {
@@ -3131,12 +3325,20 @@ function handleFriendRequest(requestId, status) {
             type: "system",
             isRead: false
         };
-        db.notifications.unshift(noti);
-        syncToRemote("save_notification", noti);
+        if (useFirebase) {
+            database.ref('notifications/' + noti.id).set(noti);
+        } else {
+            db.notifications.unshift(noti);
+            syncToRemote("save_notification", noti);
+        }
     }
     
-    saveLocalDB();
-    syncToRemote("save_friend_request", req);
+    if (useFirebase) {
+        database.ref('friendRequests/' + req.id).set(req);
+    } else {
+        saveLocalDB();
+        syncToRemote("save_friend_request", req);
+    }
     renderFriends();
     showToast(status === "accepted" ? "Friend request accepted!" : "Friend request ignored.");
     updateUI();
@@ -3157,9 +3359,13 @@ function sendFriendRequest(receiverId) {
         status: "pending",
         createdAt: new Date().toISOString()
     };
-    db.friendRequests.push(newReq);
-    saveLocalDB();
-    syncToRemote("save_friend_request", newReq);
+    if (useFirebase) {
+        database.ref('friendRequests/' + newReq.id).set(newReq);
+    } else {
+        db.friendRequests.push(newReq);
+        saveLocalDB();
+        syncToRemote("save_friend_request", newReq);
+    }
     showToast("Friend request sent!");
     
     const noti = {
@@ -3171,8 +3377,12 @@ function sendFriendRequest(receiverId) {
         type: "system",
         isRead: false
     };
-    db.notifications.unshift(noti);
-    syncToRemote("save_notification", noti);
+    if (useFirebase) {
+        database.ref('notifications/' + noti.id).set(noti);
+    } else {
+        db.notifications.unshift(noti);
+        syncToRemote("save_notification", noti);
+    }
     
     inspectUserProfile(receiverId);
 }
