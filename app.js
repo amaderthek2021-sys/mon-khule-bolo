@@ -631,7 +631,8 @@ async function syncToRemote(action, payload) {
         fetch(API_URL, {
             method: "POST",
             body: JSON.stringify({ action: action, payload: payload }),
-            headers: { "Content-Type": "application/json" }
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" }
         });
     } catch (err) {
         console.error("Failed to push sync to remote DB:", err);
