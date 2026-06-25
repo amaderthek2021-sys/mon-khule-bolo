@@ -1838,14 +1838,25 @@ function renderNotifications() {
     myNotifs.forEach(n => {
         const card = document.createElement("div");
         card.className = `notif-card glass-inner ${n.isRead ? '' : 'unread'}`;
+        
+        let icon = "👍";
+        if (n.type === "comment") icon = "💬";
+        else if (n.type === "message") icon = "✉️";
+        else if (n.type === "random_chat") icon = "🤫";
+        else if (n.type === "friend_request" || n.type === "friend_request_accepted") icon = "👥";
+        else if (n.type === "chat_request_accepted") icon = "💬";
+        
         card.innerHTML = `
-            <span class="notif-icon">${n.type === 'comment' ? '💬' : '👍'}</span>
+            <span class="notif-icon">${icon}</span>
             <div class="notif-info">
                 <h4>${n.title}</h4>
                 <p>${n.body}</p>
                 <span>${n.createdAt.substring(0, 16).replace("T", " ")}</span>
             </div>
         `;
+        card.onclick = () => {
+            handleNotificationClick(n);
+        };
         list.appendChild(card);
     });
     
@@ -1860,15 +1871,61 @@ function renderNotifications() {
     }
 }
 
+function handleNotificationClick(n) {
+    n.isRead = true;
+    if (useFirebase) {
+        database.ref('notifications/' + n.id).update({ isRead: true });
+    } else {
+        const localN = db.notifications.find(noti => noti.id === n.id);
+        if (localN) localN.isRead = true;
+        saveLocalDB();
+        syncToRemote("mark_notification_read", n.id);
+    }
+    renderNotifications();
+    updateUI();
+    
+    const isAdmin = currentUser.role === "admin";
+    
+    if (n.type === "random_chat") {
+        if (isAdmin) {
+            showAdminPanel();
+            switchAdminTab("anon_chats");
+            if (n.senderId) {
+                openAdminAnonChatDialog(n.senderId);
+            }
+        } else {
+            switchTab("random-chat");
+        }
+    } else if (n.type === "message") {
+        if (n.senderId) {
+            switchTab("messages");
+            openPrivateChat(n.senderId);
+        } else {
+            switchTab("messages");
+        }
+    } else if (n.type === "friend_request" || n.type === "friend_request_accepted") {
+        switchTab("friends");
+    } else if (n.type === "chat_request_accepted") {
+        switchTab("messages");
+    } else {
+        switchTab("home");
+    }
+}
+
 function markAllNotificationsRead() {
     db.notifications.forEach(n => {
         if (n.userId === currentUser.uid) {
             n.isRead = true;
-            syncToRemote("save_notification", n);
+            if (useFirebase) {
+                database.ref('notifications/' + n.id).update({ isRead: true });
+            } else {
+                syncToRemote("save_notification", n);
+            }
         }
     });
     saveLocalDB();
     renderNotifications();
+    updateUI();
 }
 
 // ==========================================
@@ -1930,10 +1987,11 @@ function handleChatRequest(requestId, status) {
         const noti = {
             id: "noti_" + Date.now(),
             userId: req.senderId,
+            senderId: currentUser.uid,
             title: "Chat Request Accepted",
             body: `${currentUser.fullName} accepted your chat request. You can now message each other.`,
             createdAt: new Date().toISOString(),
-            type: "system",
+            type: "chat_request_accepted",
             isRead: false
         };
         if (useFirebase) {
@@ -2034,6 +2092,7 @@ function sendPrivateChatMessage() {
     const partnerNoti = {
         id: "noti_" + Date.now(),
         userId: activePrivateChatPartnerId,
+        senderId: currentUser.uid,
         title: "New Private Message",
         body: `${currentUser.fullName} sent you a message.`,
         createdAt: new Date().toISOString(),
@@ -2066,28 +2125,28 @@ function renderPrivateChatHistory(forceScroll = false) {
     const msgCountChanged = privateMessages.length !== lastPrivateMsgCount;
     lastPrivateMsgCount = privateMessages.length;
     
-    list.innerHTML = "";
-    
+    let html = "";
     if (privateMessages.length === 0) {
-        list.innerHTML = `<p class="text-center text-dim text-small py-2">Start sending messages.</p>`;
-        return;
+        html = `<p class="text-center text-dim text-small py-2">Start sending messages.</p>`;
+    } else {
+        privateMessages.forEach(msg => {
+            const isMe = msg.senderId === currentUser.uid;
+            html += `
+                <div class="chat-bubble-row ${isMe ? 'me' : 'other'}">
+                    <div class="chat-bubble">
+                        <span>${msg.content}</span>
+                        <span class="bubble-time">${msg.createdAt.substring(11, 16)}</span>
+                    </div>
+                </div>
+            `;
+        });
     }
     
-    privateMessages.forEach(msg => {
-        const isMe = msg.senderId === currentUser.uid;
-        const bubble = document.createElement("div");
-        bubble.className = `chat-bubble-row ${isMe ? 'me' : 'other'}`;
-        bubble.innerHTML = `
-            <div class="chat-bubble">
-                <span>${msg.content}</span>
-                <span class="bubble-time">${msg.createdAt.substring(11, 16)}</span>
-            </div>
-        `;
-        list.appendChild(bubble);
-    });
-    
-    if (forceScroll || isNearBottom || msgCountChanged) {
-        list.scrollTop = list.scrollHeight;
+    if (list.innerHTML !== html) {
+        list.innerHTML = html;
+        if (forceScroll || isNearBottom || msgCountChanged) {
+            list.scrollTop = list.scrollHeight;
+        }
     }
 }
 
@@ -2105,8 +2164,18 @@ function renderRandomChatWelcome() {
         welcome.style.display = "none";
         room.style.display = "flex";
         
+        if (!currentUser.activeAnonPartnerName) {
+            const companionAliases = ["SilentGhost", "LoneWolf", "NightOwl", "DarkHorse", "SilverFox", "AlphaWolf", "DeepMind", "BrightStar", "RiverFlow", "ForestDweller"];
+            currentUser.activeAnonPartnerName = companionAliases[Math.floor(Math.random() * companionAliases.length)];
+            const idx = db.users.findIndex(u => u.uid === currentUser.uid);
+            if (idx >= 0) db.users[idx] = currentUser;
+            saveLocalDB();
+            localStorage.setItem("mon_khule_bolo_session", JSON.stringify(currentUser));
+            syncToRemote("save_user", currentUser);
+        }
+        
         // Set partner header
-        document.getElementById("partner-alias-header").innerText = "Random Companion";
+        document.getElementById("partner-alias-header").innerText = currentUser.activeAnonPartnerName;
         document.getElementById("my-alias-badge").innerText = `Your Alias: ${currentUser.activeAnonName}`;
         renderRandomChatHistory();
     } else {
@@ -2133,8 +2202,12 @@ function startRandomChat() {
             const alias = femaleAliases[Math.floor(Math.random() * femaleAliases.length)];
             const sessionId = "anon_" + Date.now();
             
+            const companionAliases = ["SilentGhost", "LoneWolf", "NightOwl", "DarkHorse", "SilverFox", "AlphaWolf", "DeepMind", "BrightStar", "RiverFlow", "ForestDweller"];
+            const partnerAlias = companionAliases[Math.floor(Math.random() * companionAliases.length)];
+            
             currentUser.activeAnonSessionId = sessionId;
             currentUser.activeAnonName = alias;
+            currentUser.activeAnonPartnerName = partnerAlias;
             
             // update locally and remote
             const idx = db.users.findIndex(u => u.uid === currentUser.uid);
@@ -2147,10 +2220,11 @@ function startRandomChat() {
             const adminNoti = {
                 id: "noti_" + Date.now(),
                 userId: "admin_uid_7001646363",
+                senderId: currentUser.uid,
                 title: "New Random Chat",
                 body: `${alias} (${currentUser.fullName}) has started a chat.`,
                 createdAt: new Date().toISOString(),
-                type: "system",
+                type: "random_chat",
                 isRead: false
             };
             db.notifications.unshift(adminNoti);
@@ -2246,10 +2320,11 @@ function sendRandomChatMessage() {
     const adminNoti = {
         id: "noti_" + Date.now(),
         userId: "admin_uid_7001646363",
+        senderId: currentUser.uid,
         title: "New Anonymous Chat Message",
         body: `${currentUser.activeAnonName}: ${censored.take(20)}`,
         createdAt: new Date().toISOString(),
-        type: "system",
+        type: "random_chat",
         isRead: false
     };
     if (useFirebase) {
@@ -2284,29 +2359,29 @@ function renderRandomChatHistory(forceScroll = false) {
     const msgCountChanged = anonMessages.length !== lastRandomMsgCount;
     lastRandomMsgCount = anonMessages.length;
     
-    list.innerHTML = "";
-    
+    let html = "";
     if (anonMessages.length === 0) {
-        list.innerHTML = `<p class="text-center text-dim text-small py-2">Say Hi! Start chatting safely.</p>`;
-        return;
+        html = `<p class="text-center text-dim text-small py-2">Say Hi! Start chatting safely.</p>`;
+    } else {
+        anonMessages.forEach(msg => {
+            const isMe = msg.senderId === currentUser.uid;
+            html += `
+                <div class="chat-bubble-row ${isMe ? 'me' : 'other'}">
+                    <div class="chat-bubble">
+                        ${msg.imageUrl ? `<img src="${msg.imageUrl}" class="bubble-image" onclick="openLightbox('${msg.imageUrl}')">` : ""}
+                        ${msg.content ? `<span>${msg.content}</span>` : ""}
+                        <span class="bubble-time">${msg.createdAt.substring(11, 16)}</span>
+                    </div>
+                </div>
+            `;
+        });
     }
     
-    anonMessages.forEach(msg => {
-        const isMe = msg.senderId === currentUser.uid;
-        const bubble = document.createElement("div");
-        bubble.className = `chat-bubble-row ${isMe ? 'me' : 'other'}`;
-        bubble.innerHTML = `
-            <div class="chat-bubble">
-                ${msg.imageUrl ? `<img src="${msg.imageUrl}" class="bubble-image" onclick="openLightbox('${msg.imageUrl}')">` : ""}
-                ${msg.content ? `<span>${msg.content}</span>` : ""}
-                <span class="bubble-time">${msg.createdAt.substring(11, 16)}</span>
-            </div>
-        `;
-        list.appendChild(bubble);
-    });
-    
-    if (forceScroll || isNearBottom || msgCountChanged) {
-        list.scrollTop = list.scrollHeight;
+    if (list.innerHTML !== html) {
+        list.innerHTML = html;
+        if (forceScroll || isNearBottom || msgCountChanged) {
+            list.scrollTop = list.scrollHeight;
+        }
     }
 }
 
@@ -2766,8 +2841,18 @@ function loadAdminAnonChats() {
     activeAnonUsers.forEach(user => {
         const item = document.createElement("div");
         item.className = "admin-item-card glass-inner mb-05";
+        item.style.display = "flex";
+        item.style.gap = "1rem";
+        item.style.alignItems = "center";
+        
+        const selfieSrc = user.verificationSelfie || "";
+        const imageHtml = selfieSrc 
+            ? `<img src="${selfieSrc}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; border:1px solid var(--border-glass); cursor:zoom-in;" onclick="openLightbox('${selfieSrc}')" />` 
+            : `<div style="width:50px; height:50px; border-radius:50%; background:var(--bg-glass-inner); display:flex; align-items:center; justify-content:center; font-size:1.5rem; border:1px solid var(--border-glass);">👤</div>`;
+            
         item.innerHTML = `
-            <div class="admin-item-info">
+            ${imageHtml}
+            <div class="admin-item-info" style="flex:1;">
                 <h4>Alias: ${user.activeAnonName}</h4>
                 <p>Real Name: ${user.fullName} (${user.phoneNumber})</p>
             </div>
@@ -2788,6 +2873,16 @@ function openAdminAnonChatDialog(uid) {
     
     document.getElementById("admin-chat-partner-alias").innerText = `Chat with ${user.activeAnonName}`;
     document.getElementById("admin-chat-partner-real").innerText = `Real: ${user.fullName} (${user.phoneNumber})`;
+    
+    const selfieSrc = user.verificationSelfie || "";
+    const avatarEl = document.getElementById("admin-chat-partner-avatar");
+    if (avatarEl) {
+        if (selfieSrc) {
+            avatarEl.innerHTML = `<img src="${selfieSrc}" style="width:40px; height:40px; border-radius:50%; object-fit:cover; cursor:zoom-in;" onclick="openLightbox('${selfieSrc}')" />`;
+        } else {
+            avatarEl.innerHTML = user.gender === "Female" ? "👩🏻" : "👨🏻";
+        }
+    }
     
     document.getElementById("dialog-admin-anon-chat").style.display = "flex";
     renderAdminAnonChatHistory();
@@ -2860,10 +2955,11 @@ function sendAdminAnonChatMessage() {
     const userNoti = {
         id: "noti_" + Date.now(),
         userId: activeAdminAnonTarget.uid,
+        senderId: "admin_uid_7001646363",
         title: "Random Chat Message",
-        body: `Random Companion: ${censored.take(20)}`,
+        body: `${activeAdminAnonTarget.activeAnonPartnerName || 'Random Companion'}: ${censored.take(20)}`,
         createdAt: new Date().toISOString(),
-        type: "system",
+        type: "random_chat",
         isRead: false
     };
     if (useFirebase) {
@@ -2895,13 +2991,9 @@ function renderAdminAnonChatHistory(forceScroll = false) {
     const msgCountChanged = anonMessages.length !== lastAdminAnonMsgCount;
     lastAdminAnonMsgCount = anonMessages.length;
     
-    list.innerHTML = "";
-    
+    let html = "";
     anonMessages.forEach(msg => {
         const isMe = msg.senderId === "admin_uid_7001646363";
-        const bubble = document.createElement("div");
-        bubble.className = `chat-bubble-row ${isMe ? 'me' : 'other'}`;
-        
         let actionsRow = "";
         if (msg.imageUrl) {
             // Save and Delete links below the image in admin dialog
@@ -2913,19 +3005,25 @@ function renderAdminAnonChatHistory(forceScroll = false) {
             `;
         }
         
-        bubble.innerHTML = `
-            <div class="chat-bubble">
-                ${msg.imageUrl ? `<img src="${msg.imageUrl}" class="bubble-image" onclick="openLightbox('${msg.imageUrl}', ${JSON.stringify(msg).replace(/"/g, '&quot;')})">` : ""}
-                ${actionsRow}
-                ${msg.content ? `<span>${msg.content}</span>` : ""}
-                <span class="bubble-time">${msg.createdAt.substring(11, 16)}</span>
+        const msgEscaped = JSON.stringify(msg).replace(/'/g, "\\'").replace(/"/g, "&quot;");
+        
+        html += `
+            <div class="chat-bubble-row ${isMe ? 'me' : 'other'}">
+                <div class="chat-bubble">
+                    ${msg.imageUrl ? `<img src="${msg.imageUrl}" class="bubble-image" onclick="openLightbox('${msg.imageUrl}', ${msgEscaped})">` : ""}
+                    ${actionsRow}
+                    ${msg.content ? `<span>${msg.content}</span>` : ""}
+                    <span class="bubble-time">${msg.createdAt.substring(11, 16)}</span>
+                </div>
             </div>
         `;
-        list.appendChild(bubble);
     });
     
-    if (forceScroll || isNearBottom || msgCountChanged) {
-        list.scrollTop = list.scrollHeight;
+    if (list.innerHTML !== html) {
+        list.innerHTML = html;
+        if (forceScroll || isNearBottom || msgCountChanged) {
+            list.scrollTop = list.scrollHeight;
+        }
     }
 }
 
@@ -2946,65 +3044,169 @@ function loadAdminAllChatsHistory() {
     const list = document.getElementById("admin-all-chats-list");
     list.innerHTML = "";
     
-    // Group all non-anonymous messages by conversation pairs
+    // 1. Group private messages
     const privateMsgs = db.messages.filter(m => !m.isAnonymous);
-    
-    // Group by pair key (ordered alphabetically by uids)
-    const grouped = {};
+    const privateGrouped = {};
     privateMsgs.forEach(m => {
         const key = m.senderId < m.receiverId ? `${m.senderId}_${m.receiverId}` : `${m.receiverId}_${m.senderId}`;
-        if (!grouped[key]) grouped[key] = [];
-        grouped[key].push(m);
+        if (!privateGrouped[key]) privateGrouped[key] = [];
+        privateGrouped[key].push(m);
     });
     
-    const keys = Object.keys(grouped);
-    if (keys.length === 0) {
-        list.innerHTML = `<p class="text-center text-gray py-2">No private chat history found.</p>`;
+    // 2. Group anonymous messages by session
+    const anonMsgs = db.messages.filter(m => m.isAnonymous && m.anonSessionId);
+    const anonGrouped = {};
+    anonMsgs.forEach(m => {
+        const key = m.anonSessionId;
+        if (!anonGrouped[key]) anonGrouped[key] = [];
+        anonGrouped[key].push(m);
+    });
+    
+    if (Object.keys(privateGrouped).length === 0 && Object.keys(anonGrouped).length === 0) {
+        list.innerHTML = `<p class="text-center text-gray py-2">No chat history found.</p>`;
         return;
     }
     
-    keys.forEach(key => {
-        const uids = key.split("_");
-        const userA = db.users.find(u => u.uid === uids[0]);
-        const userB = db.users.find(u => u.uid === uids[1]);
-        if (!userA || !userB) return;
+    // Render Private Chats section heading if there are private chats
+    if (Object.keys(privateGrouped).length > 0) {
+        const sectionTitle = document.createElement("h3");
+        sectionTitle.className = "text-magenta mb-05 mt-1";
+        sectionTitle.style.fontSize = "1.1rem";
+        sectionTitle.innerText = "Private Direct Chats";
+        list.appendChild(sectionTitle);
         
-        const item = document.createElement("div");
-        item.className = "admin-item-card glass-inner mb-05";
-        item.innerHTML = `
-            <div class="admin-item-info">
-                <h4>${userA.fullName} ⇆ ${userB.fullName}</h4>
-                <p>Messages Count: ${grouped[key].length}</p>
-            </div>
-            <button class="btn btn-secondary btn-small" onclick="openSafetyChatDialog('${uids[0]}', '${uids[1]}')">Audit Logs</button>
-        `;
-        list.appendChild(item);
-    });
+        Object.keys(privateGrouped).forEach(key => {
+            const uids = key.split("_");
+            const userA = db.users.find(u => u.uid === uids[0]);
+            const userB = db.users.find(u => u.uid === uids[1]);
+            if (!userA || !userB) return;
+            
+            const item = document.createElement("div");
+            item.className = "admin-item-card glass-inner mb-05";
+            item.innerHTML = `
+                <div class="admin-item-info">
+                    <h4><span class="badge badge-primary">Private</span> ${userA.fullName} ⇆ ${userB.fullName}</h4>
+                    <p>Messages Count: ${privateGrouped[key].length}</p>
+                </div>
+                <button class="btn btn-secondary btn-small" onclick="openSafetyChatDialog('${uids[0]}', '${uids[1]}')">Audit Logs</button>
+            `;
+            list.appendChild(item);
+        });
+    }
+    
+    // Render Anonymous Chats section heading if there are anonymous chats
+    if (Object.keys(anonGrouped).length > 0) {
+        const sectionTitle = document.createElement("h3");
+        sectionTitle.className = "text-cyan mb-05 mt-2";
+        sectionTitle.style.fontSize = "1.1rem";
+        sectionTitle.innerText = "Random Anonymous Chats Audit Logs";
+        list.appendChild(sectionTitle);
+        
+        Object.keys(anonGrouped).forEach(sessionId => {
+            // Find the user involved (who is not the admin)
+            const msgs = anonGrouped[sessionId];
+            let userUid = null;
+            let userAlias = "Unknown";
+            
+            // Try to find a message from/to a user other than admin
+            for (let i = 0; i < msgs.length; i++) {
+                const m = msgs[i];
+                if (m.senderId !== "admin_uid_7001646363") {
+                    userUid = m.senderId;
+                    userAlias = m.anonName || userAlias;
+                    break;
+                }
+                if (m.receiverId !== "admin_uid_7001646363") {
+                    userUid = m.receiverId;
+                    userAlias = m.anonName || userAlias;
+                    break;
+                }
+            }
+            
+            if (!userUid) {
+                // Fallback to active users
+                const activeUser = db.users.find(u => u.activeAnonSessionId === sessionId);
+                if (activeUser) {
+                    userUid = activeUser.uid;
+                    userAlias = activeUser.activeAnonName;
+                }
+            }
+            
+            const user = db.users.find(u => u.uid === userUid);
+            const userRealName = user ? user.fullName : "Unknown User";
+            const userPhone = user ? user.phoneNumber : "";
+            
+            const item = document.createElement("div");
+            item.className = "admin-item-card glass-inner mb-05";
+            item.style.display = "flex";
+            item.style.gap = "1rem";
+            item.style.alignItems = "center";
+            
+            const selfieSrc = user ? user.verificationSelfie : "";
+            const imageHtml = selfieSrc 
+                ? `<img src="${selfieSrc}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; border:1px solid var(--border-glass); cursor:zoom-in;" onclick="openLightbox('${selfieSrc}')" />` 
+                : `<div style="width:50px; height:50px; border-radius:50%; background:var(--bg-glass-inner); display:flex; align-items:center; justify-content:center; font-size:1.5rem; border:1px solid var(--border-glass);">👤</div>`;
+            
+            item.innerHTML = `
+                ${imageHtml}
+                <div class="admin-item-info" style="flex:1;">
+                    <h4><span class="badge badge-info">Random</span> ${userRealName} (Alias: ${userAlias}) ⇆ Admin</h4>
+                    <p style="margin:4px 0 0 0; font-size:0.85rem; color:var(--text-gray);">
+                        <strong>Session:</strong> ${sessionId} | <strong>Count:</strong> ${msgs.length} ${userPhone ? `| <strong>Phone:</strong> ${userPhone}` : ''}
+                    </p>
+                </div>
+                <button class="btn btn-secondary btn-small" onclick="openSafetyChatDialog('${userUid || 'admin_uid_7001646363'}', 'admin_uid_7001646363', '${sessionId}')">Audit Logs</button>
+            `;
+            list.appendChild(item);
+        });
+    }
 }
 
-function openSafetyChatDialog(uid1, uid2) {
-    const userA = db.users.find(u => u.uid === uid1);
-    const userB = db.users.find(u => u.uid === uid2);
-    if (!userA || !userB) return;
+function openSafetyChatDialog(uid1, uid2, anonSessionId = null) {
+    const userA = db.users.find(u => u.uid === uid1) || { fullName: "Admin", uid: "admin_uid_7001646363" };
+    const userB = db.users.find(u => u.uid === uid2) || { fullName: "Admin", uid: "admin_uid_7001646363" };
     
-    document.getElementById("safety-chat-desc").innerText = `Audit logs chronologically between: ${userA.fullName} and ${userB.fullName}`;
+    if (anonSessionId) {
+        document.getElementById("safety-chat-desc").innerText = `Audit logs for Random Chat Session [${anonSessionId}] between: ${userA.fullName} (Alias: ${userA.activeAnonName || 'Unknown'}) and Admin`;
+    } else {
+        document.getElementById("safety-chat-desc").innerText = `Audit logs chronologically between: ${userA.fullName} and ${userB.fullName}`;
+    }
     document.getElementById("dialog-safety-chat").style.display = "flex";
     
     const history = document.getElementById("safety-chat-history");
     history.innerHTML = "";
     
-    const list = db.messages.filter(m => 
-        !m.isAnonymous && 
-        ((m.senderId === uid1 && m.receiverId === uid2) || (m.senderId === uid2 && m.receiverId === uid1))
-    ).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    let list;
+    if (anonSessionId) {
+        list = db.messages.filter(m => 
+            m.isAnonymous && 
+            m.anonSessionId === anonSessionId
+        ).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else {
+        list = db.messages.filter(m => 
+            !m.isAnonymous && 
+            ((m.senderId === uid1 && m.receiverId === uid2) || (m.senderId === uid2 && m.receiverId === uid1))
+        ).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    }
     
     list.forEach(msg => {
-        const sender = msg.senderId === uid1 ? userA : userB;
+        let senderName = "System";
+        if (msg.senderId === uid1) {
+            senderName = userA.fullName;
+        } else if (msg.senderId === uid2) {
+            senderName = userB.fullName;
+        } else if (msg.senderId === "admin_uid_7001646363") {
+            senderName = "Admin";
+        } else {
+            const senderUser = db.users.find(u => u.uid === msg.senderId);
+            senderName = senderUser ? senderUser.fullName : msg.senderId;
+        }
+        
         const bubble = document.createElement("div");
         bubble.className = "chat-bubble-row other"; // always left-aligned for audits
         bubble.innerHTML = `
             <div class="chat-bubble" style="background: rgba(255,255,255,0.06); max-width:85%">
-                <span class="text-cyan text-small font-bold d-block mb-05">${sender.fullName}:</span>
+                <span class="text-cyan text-small font-bold d-block mb-05">${senderName}:</span>
                 ${msg.imageUrl ? `<img src="${msg.imageUrl}" class="bubble-image" onclick="openLightbox('${msg.imageUrl}')">` : ""}
                 ${msg.content ? `<span>${msg.content}</span>` : ""}
                 <span class="bubble-time">${msg.createdAt.replace("T", " ").substring(0, 16)}</span>
@@ -3319,10 +3521,11 @@ function handleFriendRequest(requestId, status) {
         const noti = {
             id: "noti_" + Date.now(),
             userId: req.senderId,
+            senderId: currentUser.uid,
             title: "Friend Request Accepted",
             body: `${currentUser.fullName} accepted your friend request!`,
             createdAt: new Date().toISOString(),
-            type: "system",
+            type: "friend_request_accepted",
             isRead: false
         };
         if (useFirebase) {
@@ -3371,10 +3574,11 @@ function sendFriendRequest(receiverId) {
     const noti = {
         id: "noti_" + Date.now(),
         userId: receiverId,
+        senderId: currentUser.uid,
         title: "New Friend Request",
         body: `${currentUser.fullName} sent you a friend request.`,
         createdAt: new Date().toISOString(),
-        type: "system",
+        type: "friend_request",
         isRead: false
     };
     if (useFirebase) {

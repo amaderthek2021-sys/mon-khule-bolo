@@ -1208,6 +1208,7 @@ body.logged-in #screen-pending {
     align-items: flex-start;
     gap: 0.8rem;
     transition: var(--transition-smooth);
+    cursor: pointer;
 }
 
 .notif-card.unread {
