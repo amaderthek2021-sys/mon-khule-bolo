@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,27 +36,26 @@
                 </div>
                 
                 <p class="app-intro">
-                    এখানে আপনি কোনো দ্বিধা বা সামাজিক বিচার ছাড়াই আপনার মনের যেকোনো কথা প্রকাশ করতে পারেন। 
-                    নিজের পরিচয় গোপন রেখে সকলের সাথে শেয়ার করুন গোপন কথা, স্বীকারোক্তি বা কোনো প্রশ্ন।
+                    Here you can share your thoughts, confessions, or ask questions completely anonymously without any social judgment.
                 </p>
 
                 <!-- guidelines card -->
                 <div class="guidelines-card glass-inner">
-                    <h3>📢 নির্দেশনাবলী (Guidelines):</h3>
+                    <h3>📢 Guidelines:</h3>
                     <ul>
-                        <li><i class="fas fa-shield-alt text-magenta"></i> কোনো প্রকার অপশব্দ বা গালিগালাজ ব্যবহার করা যাবে না।</li>
-                        <li><i class="fas fa-user-slash text-cyan"></i> ব্যক্তিগত আক্রমণ বা কাউকে উত্যক্ত করা কঠোরভাবে নিষিদ্ধ।</li>
-                        <li><i class="fas fa-exclamation-triangle text-magenta"></i> কোনো মিথ্যা বা বিভ্রান্তিকর তথ্য শেয়ার করবেন না।</li>
-                        <li><i class="fas fa-gavel text-cyan"></i> এডমিন প্যানেলের সিদ্ধান্তই চূড়ান্ত বলে গণ্য হবে।</li>
+                        <li><i class="fas fa-shield-alt text-magenta"></i> No offensive language or abuse allowed.</li>
+                        <li><i class="fas fa-user-slash text-cyan"></i> Personal attacks or harassment is strictly prohibited.</li>
+                        <li><i class="fas fa-exclamation-triangle text-magenta"></i> Do not share false or misleading information.</li>
+                        <li><i class="fas fa-gavel text-cyan"></i> The Admin team's decisions are final.</li>
                     </ul>
                 </div>
 
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="showScreen('screen-register')">
-                        <i class="fas fa-user-plus"></i> রেজিস্ট্রেশন করুন (Register)
+                        <i class="fas fa-user-plus"></i> Register / Sign Up
                     </button>
                     <button class="btn btn-secondary" onclick="showScreen('screen-login')">
-                        <i class="fas fa-sign-in-alt"></i> লগইন করুন (Login)
+                        <i class="fas fa-sign-in-alt"></i> Login / Sign In
                     </button>
                 </div>
 
@@ -72,34 +71,30 @@
                 <button class="btn-back" onclick="showScreen('screen-splash')">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <h2>লগইন করুন (Login)</h2>
+                <h2>Login</h2>
                 <div class="neon-line mb-2"></div>
                 
                 <form id="form-login" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label for="login-phone">ফোন নম্বর (Phone Number)</label>
+                        <label for="login-phone">Phone Number</label>
                         <div class="input-wrapper">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="login-phone" placeholder="91XXXXXXXX" required>
+                            <input type="tel" id="login-phone" placeholder="Enter Phone Number" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="login-password">পাসওয়ার্ড (Password)</label>
+                        <label for="login-password">Password</label>
                         <div class="input-wrapper">
                             <i class="fas fa-lock"></i>
-                            <input type="password" id="login-password" placeholder="Password" required>
+                            <input type="password" id="login-password" placeholder="Enter Password" required>
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary btn-block mt-2">লগইন (Sign In)</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Sign In</button>
                 </form>
                 
-                <button type="button" class="btn btn-secondary btn-block mt-1" onclick="prefillAdminCredentials()" style="background: rgba(255, 0, 127, 0.15); border: 1px solid var(--color-magenta); color: #fff;">
-                    <i class="fas fa-user-shield text-magenta"></i> অ্যাডমিন লগইন (Admin Login)
-                </button>
-                
                 <p class="auth-footer">
-                    নতুন অ্যাকাউন্ট খুলতে চান? <a href="#" onclick="showScreen('screen-register')">রেজিস্ট্রেশন করুন</a>
+                    Don't have an account? <a href="#" onclick="showScreen('screen-register')">Register Now</a>
                 </p>
             </div>
         </section>
@@ -112,173 +107,117 @@
                 <button class="btn-back" onclick="showScreen('screen-splash')">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <h2>রেজিস্ট্রেশন (Register)</h2>
+                <h2>Register</h2>
                 <div class="neon-line mb-2"></div>
 
                 <form id="form-register" onsubmit="handleRegister(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="reg-name">আসল নাম (Real Name)</label>
+                            <label for="reg-name">Real Name</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-user-circle"></i>
-                                <input type="text" id="reg-name" placeholder="Rohan Sen" required>
+                                <input type="text" id="reg-name" placeholder="E.g. Rohan Sen" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-phone">ফোন নম্বর (Phone Number)</label>
+                            <label for="reg-phone">Phone Number</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-phone"></i>
-                                <input type="tel" id="reg-phone" placeholder="90XXXXXXXX" required>
+                                <input type="tel" id="reg-phone" placeholder="E.g. 9876543210" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-username">ইউজারনেম (Username)</label>
+                            <label for="reg-gender">Gender</label>
                             <div class="input-wrapper">
-                                <i class="fas fa-at"></i>
-                                <input type="text" id="reg-username" placeholder="rohan_sen" required>
+                                <i class="fas fa-venus-mars"></i>
+                                <select id="reg-gender" onchange="handleGenderChange()" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-email">ইমেইল ঠিকানা (ঐচ্ছিক)</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-envelope"></i>
-                                <input type="email" id="reg-email" placeholder="email@example.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-password">পাসওয়ার্ড (Password)</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-lock"></i>
-                                <input type="password" id="reg-password" placeholder="Password" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-age">বয়স (Age)</label>
+                            <label for="reg-age">Age</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-calendar-alt"></i>
                                 <input type="number" id="reg-age" min="18" max="100" placeholder="22" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-gender">লিঙ্গ (Gender)</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-venus-mars"></i>
-                                <select id="reg-gender" required>
-                                    <option value="">নির্বাচন করুন</option>
-                                    <option value="Male (পুরুষ)">Male (পুরুষ)</option>
-                                    <option value="Female (মহিলা)">Female (মহিলা)</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-state">রাজ্য (State)</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <select id="reg-state" required>
-                                    <option value="West Bengal (পশ্চিমবঙ্গ)">West Bengal (পশ্চিমবঙ্গ)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-district">জেলা (District)</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-map-marked"></i>
-                                <select id="reg-district" required>
-                                    <option value="">নির্বাচন করুন</option>
-                                    <!-- Bengal 23 districts -->
-                                    <option value="Kolkata (কলকাতা)">Kolkata (কলকাতা)</option>
-                                    <option value="Howrah (হাওড়া)">Howrah (হাওড়া)</option>
-                                    <option value="Hooghly (হুগলি)">Hooghly (হুগলি)</option>
-                                    <option value="North 24 Parganas (উত্তর ২৪ পরগনা)">North 24 Parganas (উত্তর ২৪ পরগনা)</option>
-                                    <option value="South 24 Parganas (দক্ষিণ ২৪ পরগনা)">South 24 Parganas (দক্ষিণ ২৪ পরগনা)</option>
-                                    <option value="Purba Medinipur (পূর্ব মেদিনীপুর)">Purba Medinipur (পূর্ব মেদিনীপুর)</option>
-                                    <option value="Paschim Medinipur (পশ্চিম মেদিনীপুর)">Paschim Medinipur (পশ্চিম মেদিনীপুর)</option>
-                                    <option value="Purba Bardhaman (পূর্ব বর্ধমান)">Purba Bardhaman (পূর্ব বর্ধমান)</option>
-                                    <option value="Paschim Bardhaman (পশ্চিম বর্ধমান)">Paschim Bardhaman (পশ্চিম বর্ধমান)</option>
-                                    <option value="Birbhum (বীরভূম)">Birbhum (বীরভূম)</option>
-                                    <option value="Bankura (বাঁকুড়া)">Bankura (বাঁকুড়া)</option>
-                                    <option value="Purulia (পুরুলিয়া)">Purulia (পুরুলিয়া)</option>
-                                    <option value="Jhargram (ঝাড়গ্রাম)">Jhargram (ঝাড়গ্রাম)</option>
-                                    <option value="Murshidabad (মুর্শিদাবাদ)">Murshidabad (মুর্শিদাবাদ)</option>
-                                    <option value="Nadia (নদীয়ায়)">Nadia (নদীয়া)</option>
-                                    <option value="Malda (মালদা)">Malda (মালদা)</option>
-                                    <option value="Uttar Dinajpur (উত্তর দিনাজপুর)">Uttar Dinajpur (উত্তর দিনাজপুর)</option>
-                                    <option value="Dakshin Dinajpur (দক্ষিণ দিনাজপুর)">Dakshin Dinajpur (দক্ষিণ দিনাজপুর)</option>
-                                    <option value="Darjeeling (দার্জিলিং)">Darjeeling (দার্জিলিং)</option>
-                                    <option value="Kalimpong (কালিম্পং)">Kalimpong (কালিম্পং)</option>
-                                    <option value="Jalpaiguri (জলপাইগুড়ি)">Jalpaiguri (জলপাইগুড়ি)</option>
-                                    <option value="Alipurduar (আলিপুরদুয়ার)">Alipurduar (আলিপুরদুয়ার)</option>
-                                    <option value="Cooch Behar (কোচবিহার)">Cooch Behar (কোচবিহার)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-city">শহর/গ্রামের নাম (City/Town)</label>
+                            <label for="reg-city">City / Town</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-city"></i>
-                                <input type="text" id="reg-city" placeholder="Salt Lake / Howrah City" required>
+                                <input type="text" id="reg-city" placeholder="E.g. Kolkata" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-nickname">ছদ্মনাম (Nickname)</label>
+                            <label for="reg-password">Create Password</label>
                             <div class="input-wrapper">
-                                <i class="fas fa-mask"></i>
-                                <input type="text" id="reg-nickname" placeholder="Meghe Dhaka Tara" required>
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="reg-password" placeholder="Create your password" required>
                             </div>
                         </div>
                     </div>
 
                     <!-- Profile Avatar Row -->
-                    <div class="form-group mt-1">
-                        <label>একটি প্রোফাইল অ্যাভাটার বেছে নিন (Choose Avatar / Upload Photo)</label>
-                        <div class="avatar-select-container">
-                            <div class="avatar-option selected" data-avatar="avatar1" onclick="selectAvatar('avatar1')">👩🏻</div>
-                            <div class="avatar-option" data-avatar="avatar2" onclick="selectAvatar('avatar2')">👧🏽</div>
-                            <div class="avatar-option" data-avatar="avatar3" onclick="selectAvatar('avatar3')">👱🏻‍♀️</div>
-                            <div class="avatar-option" data-avatar="avatar4" onclick="selectAvatar('avatar4')">🙋‍♀️</div>
-                            <div class="avatar-option" data-avatar="avatar5" onclick="selectAvatar('avatar5')">👩🏼‍💼</div>
-                            <div class="avatar-option" data-avatar="avatar_antigravity" onclick="selectAvatar('avatar_antigravity')">👽</div>
-                            <!-- Custom Profile Picture Upload Option -->
-                            <div class="avatar-option avatar-upload-option" id="avatar-upload-trigger" data-avatar="avatar_custom" onclick="triggerProfilePicUpload()" title="গ্যালারি থেকে ফটো আপলোড করুন">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <input type="file" id="real-profile-pic-input" accept="image/*" style="display:none;" onchange="handleRealProfilePic(event)">
+                    <div class="form-group mt-1" id="avatar-select-group" style="display:none;">
+                        <label>Choose a Profile Avatar</label>
+                        <div class="avatar-select-container" id="avatar-select-container">
+                            <!-- Male Avatars -->
+                            <div class="avatar-option male-avatar selected" data-avatar="avatar_m1" onclick="selectAvatar('avatar_m1')">👨🏻</div>
+                            <div class="avatar-option male-avatar" data-avatar="avatar_m2" onclick="selectAvatar('avatar_m2')">🧔</div>
+                            <div class="avatar-option male-avatar" data-avatar="avatar_m3" onclick="selectAvatar('avatar_m3')">👨🏽‍💻</div>
+                            <div class="avatar-option male-avatar" data-avatar="avatar_m4" onclick="selectAvatar('avatar_m4')">👨🏼‍💼</div>
+                            <div class="avatar-option male-avatar" data-avatar="avatar_m5" onclick="selectAvatar('avatar_m5')">👦</div>
+                            
+                            <!-- Female Avatars -->
+                            <div class="avatar-option female-avatar" data-avatar="avatar_f1" onclick="selectAvatar('avatar_f1')">👩🏻</div>
+                            <div class="avatar-option female-avatar" data-avatar="avatar_f2" onclick="selectAvatar('avatar_f2')">👧🏽</div>
+                            <div class="avatar-option female-avatar" data-avatar="avatar_f3" onclick="selectAvatar('avatar_f3')">👱🏻‍♀️</div>
+                            <div class="avatar-option female-avatar" data-avatar="avatar_f4" onclick="selectAvatar('avatar_f4')">🙋‍♀️</div>
+                            <div class="avatar-option female-avatar" data-avatar="avatar_f5" onclick="selectAvatar('avatar_f5')">👩🏼‍💼</div>
                         </div>
                     </div>
 
                     <!-- Verification photo real uploads -->
                     <div class="verification-area mt-1 glass-inner">
-                        <h4>🛡️ সেফটি ভেরিফিকেশন (Safety Verification)</h4>
-                        <p class="text-small">নিরাপত্তার স্বার্থে আপনার রিয়েল-টাইম সেলফি এবং ৩টি গ্যালারি ফটো আবশ্যক।</p>
+                        <h4>🛡️ Safety Verification</h4>
+                        <p class="text-small" style="font-weight:bold; color:var(--text-white);">This is only to check if you are a real human (No photo upload, webcam only).</p>
                         
-                        <div class="verify-buttons">
-                            <button type="button" class="btn btn-secondary btn-small" id="btn-selfie" onclick="triggerRealSelfie()">
-                                <i class="fas fa-camera"></i> সেলফি তুলুন (Take Selfie)
-                            </button>
-                            <input type="file" id="real-selfie-input" accept="image/*" capture="user" style="display:none;" onchange="handleRealSelfie(event)">
-                            
-                            <button type="button" class="btn btn-secondary btn-small" id="btn-gallery" onclick="triggerRealGallery()">
-                                <i class="fas fa-images"></i> ৩টি ফটো আপলোড (3 Photos)
-                            </button>
-                            <input type="file" id="real-gallery-input" accept="image/*" multiple style="display:none;" onchange="handleRealGallery(event)">
+                        <div class="webcam-container" id="webcam-container" style="display:none; flex-direction:column; gap:0.5rem; margin-bottom:1rem;">
+                            <video id="webcam-preview" autoplay playsinline style="width:100%; max-height:240px; object-fit:cover; border-radius:8px; border: 1px solid var(--border-glass);"></video>
+                            <div style="display:flex; gap:0.5rem;">
+                                <button type="button" class="btn btn-primary btn-small" id="btn-capture-selfie" onclick="captureSelfieFromWebcam()">📸 Take Selfie</button>
+                                <button type="button" class="btn btn-secondary btn-small" onclick="stopWebcam()">Close</button>
+                            </div>
                         </div>
-                        <div class="verify-status mt-05">
-                            <span id="selfie-status" class="status-badge red">সেলফি বাকি ❌</span>
-                            <span id="gallery-status" class="status-badge red">গ্যালারি বাকি ❌</span>
+
+                        <div class="verify-buttons" style="display:flex; gap:0.8rem; margin-top:0.6rem;">
+                            <button type="button" class="btn btn-secondary btn-small" id="btn-selfie" onclick="startWebcam()">
+                                <i class="fas fa-camera"></i> Start Selfie Camera
+                            </button>
+                        </div>
+                        <div class="verify-status mt-05" style="display:flex; gap:0.6rem;">
+                            <span id="selfie-status" class="status-badge red">Selfie Pending ❌</span>
+                        </div>
+                        <div id="selfie-preview-container" style="display:none; margin-top:0.5rem;">
+                            <p class="text-small text-gray">Selfie Preview:</p>
+                            <img id="selfie-preview-img" style="max-height:100px; border-radius:6px; border:1px solid var(--border-glass);" />
                         </div>
                     </div>
 
                     <div class="form-check mt-1">
                         <input type="checkbox" id="reg-guidelines" required>
-                        <label for="reg-guidelines">আমি মন খুলে বলো-এর <a href="#" onclick="alert('নির্দেশাবলী মেনে পোস্ট ও চ্যাট করতে সম্মত আছেন।')">কমিউনিটি নির্দেশনাবলী</a> মেনে চলতে রাজি আছি।</label>
+                        <label for="reg-guidelines">I agree to follow the <a href="#" onclick="alert('I agree to respect guidelines and be safe.')">Community Guidelines</a>.</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block mt-2">নিবন্ধন করুন (Sign Up)</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Sign Up</button>
                 </form>
                 
                 <p class="auth-footer">
-                    ইতিমধ্যেই অ্যাকাউন্ট আছে? <a href="#" onclick="showScreen('screen-login')">লগইন করুন</a>
+                    Already have an account? <a href="#" onclick="showScreen('screen-login')">Login Here</a>
                 </p>
             </div>
         </section>
@@ -289,14 +228,14 @@
         <section id="screen-pending" class="screen">
             <div class="splash-card glass">
                 <span class="logo-emoji text-yellow">⏳</span>
-                <h2>ভেরিফিকেশন অপেক্ষারত (Verification Pending)</h2>
+                <h2>Verification Pending</h2>
                 <div class="neon-line"></div>
                 <p class="verification-desc">
-                    ধন্যবাদ! আপনার রেজিস্ট্রেশন অনুরোধ এবং আপলোড করা ভেরিফিকেশন ছবিগুলি সফলভাবে অ্যাডমিন প্যানেলে জমা হয়েছে।
+                    Thank you! Your registration request and uploaded verification photos have been successfully submitted to the admin panel.
                     <br><br>
-                    আমাদের অ্যাডমিন আপনার সেলফি ও গ্যালারি ছবিগুলি খতিয়ে দেখে অ্যাকাউন্ট অনুমোদন করলে আপনি লগইন করতে পারবেন। সাধারণ নিরাপত্তার স্বার্থে আমরা এই যাচাইকরণ প্রক্রিয়াটি করে থাকি।
+                    You will be able to log in once our admin reviews your selfie and approves your account. We perform this verification check to keep the community safe.
                 </p>
-                <button class="btn btn-secondary" onclick="showScreen('screen-splash')">স্বাগতম স্ক্রিনে ফিরে যান</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-splash')">Go back to Welcome screen</button>
             </div>
         </section>
 
@@ -309,34 +248,32 @@
             <header class="fb-top-nav glass">
                 <div class="fb-left">
                     <img src="logo.png" class="fb-logo-img" alt="Logo">
-                    <span class="fb-logo-text font-outfit">মন খুলে বলো</span>
+                    <span class="fb-logo-text font-outfit">Mon Khule Bolo</span>
                 </div>
                 
                 <nav class="fb-middle nav-menu">
                     <a href="#" class="nav-item active" data-tab="home" onclick="switchTab('home')">
-                        <i class="fas fa-home"></i> <span>হোম</span>
+                        <i class="fas fa-home"></i> <span>Home</span>
                     </a>
-                    <a href="#" class="nav-item" data-tab="explore" onclick="switchTab('explore')">
-                        <i class="fas fa-search"></i> <span>অনুসন্ধান</span>
+                    <a href="#" class="nav-item" data-tab="random-chat" onclick="switchTab('random-chat')">
+                        <i class="fas fa-user-secret"></i> <span>Randomly Chat Anonymously</span>
                     </a>
                     <a href="#" class="nav-item" data-tab="categories" onclick="switchTab('categories')">
-                        <i class="fas fa-list"></i> <span>ক্যাটাগরি</span>
+                        <i class="fas fa-list"></i> <span>Categories</span>
                     </a>
                     <a href="#" class="nav-item" data-tab="notifications" onclick="switchTab('notifications')">
-                        <i class="fas fa-bell"></i> <span>নোটিফিকেশন</span>
+                        <i class="fas fa-bell"></i> <span>Notifications</span>
                         <span id="badge-notif" class="badge" style="display:none;">0</span>
                     </a>
                     <a href="#" class="nav-item" data-tab="messages" onclick="switchTab('messages')">
-                        <i class="fas fa-envelope"></i> <span>মেসেজ</span>
+                        <i class="fas fa-envelope"></i> <span>Messages</span>
                     </a>
-                    <a href="#" class="nav-item" data-tab="random-chat" onclick="switchTab('random-chat')">
-                        <i class="fas fa-user-friends"></i> <span>র‍্যান্ডম চ্যাট</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="download-app" onclick="switchTab('download-app')">
-                        <i class="fas fa-mobile-alt text-cyan"></i> <span>অ্যাপ ডাউনলোড</span>
+                    <a href="#" class="nav-item" data-tab="friends" onclick="switchTab('friends')">
+                        <i class="fas fa-user-friends"></i> <span>Friends</span>
+                        <span id="badge-friends" class="badge" style="display:none;">0</span>
                     </a>
                     <a href="#" class="nav-item" data-tab="profile" onclick="switchTab('profile')">
-                        <i class="fas fa-user"></i> <span>প্রোফাইল</span>
+                        <i class="fas fa-user"></i> <span>Profile</span>
                     </a>
                 </nav>
                 
@@ -344,13 +281,10 @@
                     <button class="btn-icon" id="btn-admin-panel" style="display:none;" onclick="showAdminPanel()">
                         <i class="fas fa-cogs text-magenta"></i> <span>Admin</span>
                     </button>
-                    <button class="btn-icon" onclick="toggleLanguage()">
-                        <i class="fas fa-globe"></i> <span id="lang-indicator">BN</span>
-                    </button>
                     <button class="btn-icon" onclick="toggleTheme()">
                         <i class="fas fa-moon" id="theme-icon"></i>
                     </button>
-                    <button class="btn-icon text-red" onclick="logout()" title="লগআউট">
+                    <button class="btn-icon text-red" onclick="logout()" title="Logout">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
@@ -361,7 +295,7 @@
                 
                 <!-- Page Title Workspace Header -->
                 <div class="workspace-header">
-                    <h2 id="header-title">হোম ফিড (Home Feed)</h2>
+                    <h2 id="header-title">Home Feed</h2>
                 </div>
 
                 <!-- Scrollable Tab Container -->
@@ -373,22 +307,18 @@
                         <div class="post-creator glass-inner">
                             <div class="post-creator-header">
                                 <div class="post-identity-select">
-                                    <span>পরিচয় (Identity):</span>
+                                    <span>Identity:</span>
                                     <label class="radio-label">
                                         <input type="radio" name="post-identity" value="real_name" checked>
-                                        <span>আসল নাম</span>
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="post-identity" value="nickname">
-                                        <span>ছদ্মনাম</span>
+                                        <span>Real Name</span>
                                     </label>
                                     <label class="radio-label">
                                         <input type="radio" name="post-identity" value="anonymous">
-                                        <span>বেনামে</span>
+                                        <span>Anonymous</span>
                                     </label>
                                 </div>
                             </div>
-                            <textarea id="post-textarea" placeholder="মন খুলে নিজের স্বীকারোক্তি, গোপন কথা বা প্রশ্ন শেয়ার করুন..."></textarea>
+                            <textarea id="post-textarea" placeholder="Speak your mind... Share confessions, crushes, or thoughts!"></textarea>
                             
                             <!-- Attached preview indicator -->
                             <div id="attached-post-image-preview" class="attached-img-preview" style="display:none;">
@@ -398,7 +328,7 @@
 
                             <div class="post-creator-footer">
                                 <div class="post-options">
-                                    <button class="btn-post-opt" onclick="triggerPostImageUpload()"><i class="fas fa-image"></i> ছবি যুক্ত করুন</button>
+                                    <button class="btn-post-opt" onclick="triggerPostImageUpload()"><i class="fas fa-image"></i> Add Image</button>
                                     <input type="file" id="post-image-input" style="display:none;" accept="image/*" onchange="previewPostImage(event)">
                                     
                                     <select id="post-category">
@@ -412,7 +342,7 @@
                                         <option value="Guilt & Regret">Guilt & Regret</option>
                                     </select>
                                 </div>
-                                <button class="btn btn-primary btn-small" onclick="createPost()">শেয়ার করুন</button>
+                                <button class="btn btn-primary btn-small" onclick="createPost()">Post</button>
                             </div>
                         </div>
 
@@ -422,59 +352,48 @@
                         </div>
                     </div>
 
-                    <!-- TAB B: EXPLORE / SEARCH -->
-                    <div id="tab-explore" class="tab-view">
-                        <div class="search-box glass-inner mb-2">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" placeholder="আসল নাম বা ছদ্মনাম দিয়ে প্রোফাইল খুঁজুন..." oninput="handleSearch()">
-                        </div>
-                        <div id="search-results-list" class="search-results-list">
-                            <!-- Profiles dynamically loaded -->
-                        </div>
-                    </div>
-
                     <!-- TAB C: CATEGORIES -->
                     <div id="tab-categories" class="tab-view">
                         <div class="categories-grid">
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Confession')">
                                 <span class="cat-icon">🗣️</span>
                                 <h3>Confession</h3>
-                                <p>নিজের মনে চেপে রাখা স্বীকারোক্তি প্রকাশ করুন</p>
+                                <p>Share hidden feelings or secrets anonymously</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Deep Secret')">
                                 <span class="cat-icon">🤫</span>
                                 <h3>Deep Secret</h3>
-                                <p>গভীরতম গোপন কথা কারো সাথে শেয়ার করুন</p>
+                                <p>Share your deepest secrets safely</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Dark Secret')">
                                 <span class="cat-icon">🌑</span>
                                 <h3>Dark Secret</h3>
-                                <p>কালো অধ্যায়ের না বলা কথাগুলি মেলে ধরুন</p>
+                                <p>Unburden yourself from your dark memories</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Dark Desire')">
                                 <span class="cat-icon">🕯️</span>
                                 <h3>Dark Desire</h3>
-                                <p>মনের গুপ্ত ইচ্ছা এবং চাওয়া নিয়ে আলোচনা করুন</p>
+                                <p>Talk about your secret wishes and desires</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Naughty Thoughts')">
                                 <span class="cat-icon">😈</span>
                                 <h3>Naughty Thoughts</h3>
-                                <p>দুষ্টু মিষ্টি চিন্তাভাবনার নিরাপদ প্রকাশ</p>
+                                <p>Playful space for your cheeky thoughts</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Secret Crush')">
                                 <span class="cat-icon">❤️</span>
                                 <h3>Secret Crush</h3>
-                                <p>আপনার পছন্দের মানুষের প্রতি অব্যক্ত ভালোবাসার কথা</p>
+                                <p>Confess your love to your secret crushes</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Guilt & Regret')">
                                 <span class="cat-icon">😔</span>
                                 <h3>Guilt & Regret</h3>
-                                <p>ভুল অপরাধবোধ আর অনুশোচনার ভার হালকা করুন</p>
+                                <p>Lighten your heart from guilt and regrets</p>
                             </div>
                             <div class="category-card glass-inner hover-glow" onclick="selectCategory('Random Thoughts')">
                                 <span class="cat-icon">💡</span>
                                 <h3>Random Thoughts</h3>
-                                <p>যেকোনো সাধারণ চিন্তা বা সাধারণ মতামত</p>
+                                <p>General thoughts, ideas, or daily stories</p>
                             </div>
                         </div>
                     </div>
@@ -482,8 +401,8 @@
                     <!-- TAB D: NOTIFICATIONS -->
                     <div id="tab-notifications" class="tab-view">
                         <div class="notification-header glass-inner mb-1">
-                            <span>নোটিফিকেশনসমূহ</span>
-                            <button class="btn btn-secondary btn-small" onclick="markAllNotificationsRead()"><i class="fas fa-check-double"></i> সব পঠিত করুন</button>
+                            <span>Notifications</span>
+                            <button class="btn btn-secondary btn-small" onclick="markAllNotificationsRead()"><i class="fas fa-check-double"></i> Mark All as Read</button>
                         </div>
                         <div id="notifications-list" class="notifications-list">
                             <!-- Notifications dynamically loaded -->
@@ -494,14 +413,14 @@
                     <div id="tab-messages" class="tab-view">
                         <div class="messages-container">
                             <div class="message-requests-section mb-2">
-                                <h3>📥 চ্যাট অনুরোধ (Message Requests)</h3>
+                                <h3>📥 Chat Requests</h3>
                                 <div id="chat-requests-list" class="chat-requests-list">
                                     <!-- Request list loaded dynamically -->
                                 </div>
                             </div>
                             
                             <div class="active-chats-section">
-                                <h3>💬 সক্রিয় চ্যাট (Active Chats)</h3>
+                                <h3>💬 Active Chats</h3>
                                 <div id="active-chats-list" class="active-chats-list">
                                     <!-- Active chat list loaded dynamically -->
                                 </div>
@@ -513,19 +432,19 @@
                     <div id="tab-random-chat" class="tab-view">
                         <div id="random-chat-welcome" class="random-chat-welcome glass-inner">
                             <span class="big-emoji">🤫</span>
-                            <h2>র‍্যান্ডম চ্যাট (Random Chat)</h2>
+                            <h2>Random Chat</h2>
                             <p class="intro-text">
-                                এখানে আপনি সম্পূর্ণ নিজের পরিচয় গোপন রেখে অন্য কোনো চ্যাট সঙ্গীর সাথে চ্যাট করতে পারেন।
+                                Chat with a random partner completely anonymously. Your identity will never be shown.
                             </p>
                             
                             <div id="search-partner-loading" style="display:none;" class="search-loader">
                                 <div class="spinner"></div>
-                                <p id="search-partner-text">উপলব্ধ চ্যাট সঙ্গী খোঁজা হচ্ছে...</p>
-                                <p class="text-small">অনুগ্রহ করে কিছুক্ষণ অপেক্ষা করুন...</p>
+                                <p id="search-partner-text">Searching for a companion...</p>
+                                <p class="text-small">Please wait a moment...</p>
                             </div>
                             
                             <button id="btn-start-random-chat" class="btn btn-primary mt-2 btn-lg pulse-glow" onclick="startRandomChat()">
-                                র‍্যান্ডম চ্যাট শুরু করুন (Start Random Chat)
+                                Start Random Chat
                             </button>
                         </div>
 
@@ -534,10 +453,10 @@
                             <div class="chat-room-header">
                                 <div class="partner-avatar">👨🏻</div>
                                 <div class="partner-info">
-                                    <h4 id="partner-alias-header">র‍্যান্ডম সহায়তাকারী</h4>
-                                    <span id="my-alias-badge">আপনার ছদ্মনাম: ...</span>
+                                    <h4 id="partner-alias-header">Random Companion</h4>
+                                    <span id="my-alias-badge">Your Alias: ...</span>
                                 </div>
-                                <button class="btn btn-danger btn-small" onclick="stopRandomChat()"><i class="fas fa-times-circle"></i> বন্ধ করুন</button>
+                                <button class="btn btn-danger btn-small" onclick="stopRandomChat()"><i class="fas fa-times-circle"></i> Disconnect</button>
                             </div>
                             
                             <!-- Chat message history window -->
@@ -556,65 +475,101 @@
                                 <button class="btn-chat-file" onclick="triggerAnonImageUpload()"><i class="fas fa-plus"></i></button>
                                 <input type="file" id="anon-image-input" style="display:none;" accept="image/*" onchange="previewAnonImage(event)">
                                 
-                                <input type="text" id="random-chat-input" placeholder="বার্তা লিখুন..." onkeypress="handleAnonChatKeyPress(event)">
+                                <input type="text" id="random-chat-input" placeholder="Type a message..." onkeypress="handleAnonChatKeyPress(event)">
                                 <button class="btn-send" onclick="sendRandomChatMessage()"><i class="fas fa-paper-plane"></i></button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB G: DOWNLOAD APP -->
-                    <div id="tab-download-app" class="tab-view">
-                        <div class="download-card glass-inner text-center">
-                            <span class="huge-icon text-cyan">🤖</span>
-                            <h2>অ্যান্ড্রয়েড মোবাইল অ্যাপ ডাউনলোড করুন</h2>
-                            <p class="subtitle mb-2">Download Mon Khule Bolo for Android Mobile</p>
-                            
-                            <p class="download-text">
-                                আপনার ফোনের ব্রাউজার থেকে ব্রাউজ করার ঝামেলা ছাড়াই সরাসরি অ্যাপ দিয়ে চ্যাট করতে চান? 
-                                আমাদের অ্যান্ড্রয়েড অ্যাপ্লিকেশনটি নিচের দেওয়া বোতাম থেকে ডাউনলোড করে ইনস্টল করুন। 
-                                একই ইউজারনেম ও পাসওয়ার্ড দিয়ে আপনি অ্যাপেও লগইন করতে পারবেন।
-                            </p>
 
-                            <div class="download-benefits mb-2">
-                                <div class="benefit"><i class="fas fa-check-circle text-cyan"></i> স্ক্রিনশট প্রটেকশন (অন্য কেউ চ্যাটের স্ক্রিনশট নিতে পারবে না)</div>
-                                <div class="benefit"><i class="fas fa-check-circle text-cyan"></i> সরাসরি রিয়েল-টাইম ক্যামেরা দিয়ে সেলফি ক্যাপচার সুবিধা</div>
-                                <div class="benefit"><i class="fas fa-check-circle text-cyan"></i> পুশ নোটিফিকেশন অ্যালার্ট (লাইক ও মন্তব্যের নোটিফিকেশন)</div>
-                                <div class="benefit"><i class="fas fa-check-circle text-cyan"></i> অত্যন্ত দ্রুত লোড এবং মোবাইল ডেটা সাশ্রয়ী</div>
+
+                    <!-- TAB G: FRIENDS SECTION -->
+                    <div id="tab-friends" class="tab-view">
+                        <div class="friends-container glass-inner" style="padding: 1.5rem;">
+                            <div class="friends-section mb-2">
+                                <h3 class="text-magenta"><i class="fas fa-user-plus"></i> Pending Friend Requests</h3>
+                                <div class="neon-line mb-1" style="height: 1px;"></div>
+                                <div id="friend-requests-list" class="friend-requests-list">
+                                    <!-- Pending friend requests loaded dynamically -->
+                                </div>
                             </div>
-
-                            <!-- The Direct APK link -->
-                            <a href="Mon_Khule_Bolo.apk" download="Mon_Khule_Bolo.apk" class="btn btn-primary btn-lg pulse-glow">
-                                <i class="fab fa-android"></i> এপিকে ডাউনলোড করুন (Download APK)
-                            </a>
-                            <p class="text-small text-gray mt-1">ভার্সন: ৮.০ (সর্বশেষ আপডেট) | সাইজ: ~৯.৯১ এমবি</p>
+                            
+                            <div class="friends-section">
+                                <h3 class="text-cyan"><i class="fas fa-users"></i> My Friends</h3>
+                                <div class="neon-line mb-1" style="height: 1px;"></div>
+                                <div id="my-friends-list" class="my-friends-list">
+                                    <!-- Friends list loaded dynamically -->
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- TAB H: PROFILE SCREEN -->
                     <div id="tab-profile" class="tab-view">
                         <!-- Profile Card -->
-                        <div class="profile-card-details glass-inner text-center">
-                            <div class="profile-avatar-large" id="profile-display-avatar">👩🏻</div>
-                            <h2 id="profile-display-name">Rohan Sen</h2>
-                            <p id="profile-display-age-gender" class="text-gray">Age: 22 | Male (পুরুষ)</p>
-                            <p id="profile-display-location" class="text-cyan font-bold">📍 Kolkata, West Bengal</p>
-                            
-                            <div class="profile-bio-box mt-2 glass-inner text-left">
-                                <h4>Bio (জীবনী):</h4>
-                                <p id="profile-display-bio">আমি এখানে নতুন বন্ধুদের সাথে কথা বলতে এসেছি।</p>
+                        <div class="profile-card-details glass-inner">
+                            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                                <div class="profile-avatar-large" id="profile-display-avatar">👩🏻</div>
+                                <h2 id="profile-display-name">Rohan Sen</h2>
+                                <p id="profile-display-username" class="text-cyan font-bold" style="margin-top: 4px; margin-bottom: 4px; font-size: 1.1rem;">@rohan_sen</p>
+                                <p id="profile-display-age-gender" class="text-gray">Age: 22 | Male</p>
+                                <p id="profile-display-location" class="text-cyan">📍 Kolkata, West Bengal</p>
+                                <p id="profile-display-phone" class="text-gray" style="font-size: 0.85rem; margin-top: 4px; display: none;">Phone: +919876543210</p>
+                                
+                                <div class="profile-bio-box mt-2 glass-inner text-left" style="width: 100%;">
+                                    <h4>Bio:</h4>
+                                    <p id="profile-display-bio">I am here to chat and read stories.</p>
+                                </div>
                             </div>
 
-                            <div class="profile-edit-box mt-2 text-left" id="profile-edit-section">
-                                <h3>প্রোফাইল আপডেট করুন</h3>
+                            <!-- Friend Action Button Container (for inspecting other users) -->
+                            <div id="profile-friend-action-container" style="display:none; margin-top: 1rem; justify-content: center; gap: 10px;"></div>
+
+                            <!-- Edit Profile Button Trigger -->
+                            <div style="display:flex; justify-content:center; margin-top: 1rem;">
+                                <button class="btn btn-secondary btn-small" id="btn-toggle-edit-profile" onclick="toggleEditProfile()"><i class="fas fa-edit"></i> Edit Profile</button>
+                            </div>
+
+                            <!-- Edit Profile Box -->
+                            <div class="profile-edit-box mt-2 text-left" id="profile-edit-section" style="display:none;">
+                                <h3>Update Profile Details</h3>
+                                <div class="neon-line mb-1" style="height: 1px;"></div>
+                                
                                 <div class="form-group">
-                                    <label for="edit-nickname">ছদ্মনাম (Nickname)</label>
-                                    <input type="text" id="edit-nickname" placeholder="Nickname">
+                                    <label>Choose Avatar Emojis</label>
+                                    <div class="avatar-select-container" id="profile-avatar-options" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                                        <!-- Will be dynamically populated with male/female avatar emojis depending on user gender -->
+                                    </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="edit-bio">Bio (জীবনী)</label>
-                                    <textarea id="edit-bio" placeholder="আপনার সম্পর্ক কিছু লিখুন..."></textarea>
+                                    <label for="edit-profile-age">Age</label>
+                                    <input type="number" id="edit-profile-age" min="18" max="100">
                                 </div>
-                                <button class="btn btn-primary" onclick="saveProfileChanges()">আপডেট সংরক্ষণ করুন</button>
+
+                                <div class="form-group">
+                                    <label for="edit-profile-city">City</label>
+                                    <input type="text" id="edit-profile-city">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="edit-bio">Bio</label>
+                                    <textarea id="edit-bio" placeholder="Write something about yourself..."></textarea>
+                                </div>
+
+                                <div style="display: flex; gap: 10px; margin-top: 1rem;">
+                                    <button class="btn btn-primary" onclick="saveProfileChanges()">Save Changes</button>
+                                    <button class="btn btn-secondary" onclick="toggleEditProfile()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User's Posts Section -->
+                        <div class="profile-posts-section mt-2">
+                            <h3><i class="fas fa-mail-bulk text-magenta"></i> My Confessions & Posts</h3>
+                            <div class="neon-line mb-1" style="height: 1px;"></div>
+                            <div id="profile-posts-list" class="feed-list">
+                                <!-- User's posts will be loaded dynamically -->
                             </div>
                         </div>
 
@@ -654,7 +609,7 @@
                 <div class="admin-nav mb-2">
                     <button class="btn-admin-tab active" data-atab="dashboard" onclick="switchAdminTab('dashboard')">Dashboard</button>
                     <button class="btn-admin-tab" data-atab="verify" onclick="switchAdminTab('verify')">Verify Accounts</button>
-                    <button class="btn-admin-tab" data-atab="pending_posts" onclick="switchAdminTab('pending_posts')">Pending Posts</button>
+                    <button class="btn-admin-tab" data-atab="pending_posts" onclick="switchAdminTab('pending_posts')">Manage Posts</button>
                     <button class="btn-admin-tab" data-atab="users" onclick="switchAdminTab('users')">Users List</button>
                     <button class="btn-admin-tab" data-atab="reports" onclick="switchAdminTab('reports')">Reports</button>
                     <button class="btn-admin-tab" data-atab="blacklist" onclick="switchAdminTab('blacklist')">Blacklist Keywords</button>
@@ -717,8 +672,8 @@
                     <!-- ADMIN TAB: BLACKLIST -->
                     <div id="atab-blacklist" class="admin-tab-view">
                         <div class="blacklist-creator-box glass-inner mb-2">
-                            <input type="text" id="input-blacklist-word" placeholder="নিষিদ্ধ শব্দ যুক্ত করুন...">
-                            <button class="btn btn-primary" onclick="addBlacklistWord()">যোগ করুন</button>
+                            <input type="text" id="input-blacklist-word" placeholder="Add banned word...">
+                            <button class="btn btn-primary" onclick="addBlacklistWord()">Add</button>
                         </div>
                         <div id="admin-blacklist-list" class="blacklist-list">
                             <!-- Banned keywords dynamically loaded -->
@@ -754,28 +709,26 @@
     <!-- User Inspection Dialog (Verify Account Detail View) -->
     <div id="dialog-user-inspect" class="dialog-overlay" style="display:none;">
         <div class="dialog-box glass dialog-wide">
-            <h3>👤 ব্যবহারকারী ভেরিফিকেশন নিরীক্ষণ</h3>
+            <h3>👤 User Verification Inspector</h3>
             <div class="neon-line mb-1"></div>
             
             <div class="inspect-details-grid">
                 <div>
-                    <p><strong>নাম (Real Name):</strong> <span id="ins-name">...</span></p>
-                    <p><strong>ফোন নম্বর (Phone):</strong> <span id="ins-phone">...</span></p>
-                    <p><strong>পাসওয়ার্ড (Password):</strong> <span id="ins-password" class="text-magenta font-bold">...</span></p>
-                    <p><strong>বয়স ও লিঙ্গ:</strong> <span id="ins-age-gender">...</span></p>
-                    <p><strong>লোকেশন:</strong> <span id="ins-location">...</span></p>
+                    <p><strong>Real Name:</strong> <span id="ins-name">...</span></p>
+                    <p><strong>Phone:</strong> <span id="ins-phone">...</span></p>
+                    <p><strong>Password:</strong> <span id="ins-password" class="text-magenta font-bold">...</span></p>
+                    <p><strong>Age & Gender:</strong> <span id="ins-age-gender">...</span></p>
+                    <p><strong>Location:</strong> <span id="ins-location">...</span></p>
                     
                     <h4 class="mt-1">Selfie Photo:</h4>
-                    <div class="inspect-img-box selfie-box">
-                        <img id="ins-selfie-img" src="" alt="Selfie">
+                    <div class="inspect-img-box selfie-box" style="margin-top: 5px;">
+                        <img id="ins-selfie-img" src="" alt="Selfie" style="max-height: 200px; width: auto; max-width: 100%; border-radius: 8px;">
                     </div>
                 </div>
                 <div>
-                    <h4>Gallery Photos (3 Required):</h4>
-                    <div class="inspect-gallery-grid">
-                        <img id="ins-gal-1" src="" alt="Gal 1">
-                        <img id="ins-gal-2" src="" alt="Gal 2">
-                        <img id="ins-gal-3" src="" alt="Gal 3">
+                    <h4>Personal Photo:</h4>
+                    <div class="inspect-img-box gallery-box" style="margin-top: 5px;">
+                        <img id="ins-gal-1" src="" alt="Personal Photo" style="max-height: 200px; width: auto; max-width: 100%; border-radius: 8px;">
                     </div>
                 </div>
             </div>
@@ -791,7 +744,7 @@
     <!-- Active Safety Chat Dialog (Audit dialogues between users) -->
     <div id="dialog-safety-chat" class="dialog-overlay" style="display:none;">
         <div class="dialog-box glass dialog-wide">
-            <h3>🛡️ চ্যাট মনিটর অডিট লগ</h3>
+            <h3>🛡️ Safety Chat Monitor Audit Logs</h3>
             <div class="neon-line mb-1"></div>
             <p id="safety-chat-desc" class="text-gray mb-1">Audit log between User A and User B</p>
             
@@ -800,7 +753,7 @@
             </div>
             
             <div class="btn-group mt-1">
-                <button class="btn btn-secondary btn-block" onclick="closeSafetyChatDialog()">বন্ধ করুন</button>
+                <button class="btn btn-secondary btn-block" onclick="closeSafetyChatDialog()">Close</button>
             </div>
         </div>
     </div>
@@ -832,7 +785,7 @@
                 <button class="btn-chat-file" onclick="triggerAdminImageUpload()"><i class="fas fa-plus"></i></button>
                 <input type="file" id="admin-image-input" style="display:none;" accept="image/*" onchange="previewAdminImage(event)">
                 
-                <input type="text" id="admin-anon-chat-input" placeholder="উত্তর লিখুন..." onkeypress="handleAdminChatKeyPress(event)">
+                <input type="text" id="admin-anon-chat-input" placeholder="Type a reply..." onkeypress="handleAdminChatKeyPress(event)">
                 <button class="btn-send" onclick="sendAdminAnonChatMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
@@ -851,6 +804,32 @@
             <div id="lightbox-admin-actions" class="lightbox-actions-row mt-1" style="display:none;">
                 <button class="btn btn-primary" onclick="saveLightboxImage()"><i class="fas fa-download"></i> Save Image</button>
                 <button class="btn btn-danger" onclick="deleteLightboxImage()"><i class="fas fa-trash-alt"></i> Delete Image</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Private Chat Dialog Overlay -->
+    <div id="dialog-private-chat" class="dialog-overlay" style="display:none;">
+        <div class="dialog-box glass dialog-wide">
+            <div class="chat-room-header" style="display:flex; align-items:center; gap:1rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border-glass);">
+                <div class="partner-avatar" id="private-partner-avatar" style="width:40px; height:40px; border-radius:50%; background:var(--color-magenta-glow); display:flex; align-items:center; justify-content:center; font-size:1.4rem;">👩🏻</div>
+                <div class="partner-info" style="flex:1;">
+                    <h4 id="private-chat-partner-name" style="font-size:0.95rem; font-weight:600; color:var(--text-white);">Chatting...</h4>
+                    <span id="private-chat-partner-location" style="font-size:0.75rem; color:var(--text-dim);">📍 Location</span>
+                </div>
+                <button class="btn-icon" onclick="closePrivateChat()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="private-chat-history" class="chat-history" style="flex:1; overflow-y:auto; padding:1rem 0; display:flex; flex-direction:column; gap:0.8rem; height:320px;">
+                <!-- Messages loaded dynamically -->
+            </div>
+            
+            <!-- Chat Input Row -->
+            <div class="chat-input-row" style="display:flex; gap:0.6rem; align-items:center; border-top:1px solid var(--border-glass); padding-top:0.8rem;">
+                <input type="text" id="private-chat-input" placeholder="Type a message..." onkeypress="handlePrivateChatKeyPress(event)" style="flex:1; background:var(--bg-glass-inner); border:1px solid var(--border-glass); border-radius:20px; padding:0.75rem 1.2rem; font-size:0.9rem; color:var(--text-white);">
+                <button class="btn-send" onclick="sendPrivateChatMessage()" style="background:var(--color-magenta); border:none; width:42px; height:42px; border-radius:50%; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
