@@ -647,18 +647,65 @@ async function syncFromRemote() {
 }
 
 let syncPollingInterval = null;
+let chatSyncPollingInterval = null;
+let isChatSyncing = false;
+
+async function syncChatFromRemote() {
+    if (!API_URL) return;
+    if (isChatSyncing) return;
+    isChatSyncing = true;
+    try {
+        const response = await fetch(API_URL + "?action=sync_chat");
+        const remoteData = await response.json();
+        if (remoteData && remoteData.messages) {
+            db.messages = remoteData.messages || [];
+            db.notifications = remoteData.notifications || [];
+            db.chatRequests = remoteData.chatRequests || [];
+            saveLocalDB();
+            
+            // Trigger active chat renders if open
+            if (currentUser) {
+                if (activePrivateChatPartnerId) {
+                    renderPrivateChatHistory();
+                }
+                const activeTabEl = document.querySelector(".nav-item.active");
+                const isRandomChatActive = activeTabEl && activeTabEl.getAttribute("data-tab") === "random-chat";
+                if (currentUser.activeAnonSessionId && isRandomChatActive) {
+                    renderRandomChatHistory();
+                }
+                if (currentUser.role === "admin" && activeAdminAnonTarget) {
+                    renderAdminAnonChatHistory();
+                }
+            }
+        }
+    } catch (err) {
+        console.error("Failed to sync chat from remote DB:", err);
+    } finally {
+        isChatSyncing = false;
+    }
+}
 
 function startSyncPolling() {
-    if (syncPollingInterval) return; // already polling
-    syncPollingInterval = setInterval(async () => {
-        await syncFromRemote();
-    }, 3000);
+    if (!syncPollingInterval) {
+        syncPollingInterval = setInterval(async () => {
+            await syncFromRemote();
+        }, 15000); // Full DB sync every 15 seconds
+    }
+    if (!chatSyncPollingInterval) {
+        chatSyncPollingInterval = setInterval(async () => {
+            await syncChatFromRemote();
+        }, 1000); // Lightweight chat sync every 1 second (super fast!)
+    }
 }
 
 function stopSyncPolling() {
     if (syncPollingInterval) {
         clearInterval(syncPollingInterval);
         syncPollingInterval = null;
+    }
+    if (chatSyncPollingInterval) {
+        clearInterval(chatSyncPollingInterval);
+        chatSyncPollingInterval = null;
     }
 }
 
