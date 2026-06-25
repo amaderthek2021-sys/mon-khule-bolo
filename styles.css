@@ -2021,3 +2021,67 @@ body.dark-theme .dialog-overlay, body.dark-theme .lightbox-overlay {
         padding: 1.5rem 1rem;
     }
 }
+
+/* ==========================================================================
+   SUPER-FAST CHAT SCROLLING & INPUT BAR LAYOUT FIXES
+   ========================================================================== */
+
+/* 1. Fix scrolling for all Chat Dialogs (Private, Admin, Safety) on desktop and mobile */
+#dialog-private-chat .dialog-box,
+#dialog-admin-anon-chat .dialog-box,
+#dialog-safety-chat .dialog-box {
+    height: 85vh !important;
+    max-height: 700px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important; /* Prevents the dialog box container itself from scrolling */
+    padding: 1.5rem !important;
+}
+
+#dialog-private-chat .chat-history,
+#dialog-admin-anon-chat .chat-history,
+#dialog-safety-chat .chat-history {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    height: auto !important; /* Overrides any hardcoded height like 320px */
+}
+
+/* Ensure attached image previews sit nicely inside the flex flow and do not push inputs offscreen */
+.attached-img-preview {
+    flex-shrink: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* 2. Fix scrolling for Random Chat tab view on desktop and mobile */
+body.logged-in:has(#tab-random-chat.active) .tab-pane {
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 1rem !important;
+}
+
+#tab-random-chat {
+    flex: 1 !important;
+    display: none;
+    flex-direction: column !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+#tab-random-chat.active {
+    display: flex !important;
+}
+
+#tab-random-chat .chat-room {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+#tab-random-chat .chat-history {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    height: auto !important;
+}
