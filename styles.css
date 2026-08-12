@@ -2086,3 +2086,205 @@ body.logged-in:has(#tab-random-chat.active) .tab-pane {
     overflow-y: auto !important;
     height: auto !important;
 }
+
+/* Privacy Banner */
+.privacy-alert-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    background: rgba(255, 0, 127, 0.08);
+    border: 1px solid rgba(255, 0, 127, 0.2);
+    margin-bottom: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-white);
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.05);
+}
+.privacy-alert-banner i {
+    font-size: 1rem;
+}
+
+/* Gender Card Selectors - SMALLER */
+.gender-cards-group {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 0.4rem;
+    justify-content: center;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.gender-select-card {
+    flex: 1;
+    cursor: pointer;
+}
+.gender-select-card input[type="radio"] {
+    display: none;
+}
+.gender-card-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    transition: var(--transition-smooth);
+}
+.gender-select-card input[type="radio"]:checked + .gender-card-box {
+    background: rgba(0, 240, 255, 0.08);
+    border-color: var(--color-cyan);
+    box-shadow: var(--shadow-cyan-glow);
+}
+.gender-card-box .g-emoji {
+    font-size: 1.3rem;
+}
+.gender-card-box .g-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-white);
+}
+
+/* Welcome screen size control for proper web & mobile screen fit */
+.random-chat-welcome {
+    text-align: center;
+    padding: 1.2rem 1rem !important;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0.5rem auto 0 auto !important;
+}
+.random-chat-welcome h2 {
+    font-size: 1.3rem !important;
+    margin-top: 0.2rem;
+    margin-bottom: 0.4rem;
+}
+.random-chat-welcome .intro-text {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+}
+.random-chat-welcome .big-emoji {
+    font-size: 2.5rem !important;
+    margin-bottom: 0.4rem !important;
+}
+
+/* Search button in the middle big */
+#btn-start-random-chat {
+    display: block !important;
+    margin: 1.2rem auto 0 auto !important;
+    width: 220px !important;
+    font-size: 1.05rem !important;
+    padding: 0.7rem 1.5rem !important;
+    border-radius: 20px !important;
+}
+
+/* Chat Sidebar & Layout */
+.chat-room-layout {
+    display: flex;
+    gap: 1rem;
+    height: calc(100% - 70px) !important;
+    min-height: 480px;
+}
+.girl-chat-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-right: 1px solid var(--border-glass);
+    height: 100%;
+    overflow-y: auto;
+}
+.girl-chat-sidebar h4 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    color: var(--color-magenta);
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 0.5rem;
+}
+#girl-chats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.girl-chat-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+.girl-chat-item.active {
+    background: rgba(255, 0, 127, 0.06);
+    border-color: var(--color-magenta);
+}
+.girl-chat-item .chat-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-white);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+.girl-chat-item .chat-status {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+.girl-chat-item .chat-item-actions {
+    display: flex;
+    gap: 0.3rem;
+}
+.girl-chat-item .btn-icon-small {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    transition: var(--transition-smooth);
+}
+.girl-chat-item .btn-icon-small:hover {
+    color: var(--color-magenta-glow);
+}
+.chat-room-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Chat headers */
+.chat-header-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Anti-screenshot and image protection */
+.chat-history img, .lightbox-image-container img {
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -o-user-select: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: none !important; /* disabled for normal users, we override for admin */
+}
+
+/* Admin override to allow saving images */
+body.admin-mode .chat-history img,
+body.admin-mode .lightbox-image-container img {
+    pointer-events: auto !important;
+    user-select: auto !important;
+}

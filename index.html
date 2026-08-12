@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>मन खोल के बोलो | Mon Khule Bolo - Speak Your Heart Out</title>
-    <meta name="description" content="নিজের পরিচয় গোপন রেখে মন খুলে কথা বলুন সম্পূর্ণ নিরাপদে। A secure anonymous community for West Bengal, India.">
+    <title>Mon Khule Bolo | মন খুলে বলো - Anonymous Random Chat</title>
+    <meta name="description" content="নিজের পরিচয় গোপন রেখে মন খুলে কথা বলুন সম্পূর্ণ নিরাপদে। A secure anonymous community.">
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -36,30 +36,28 @@
                 </div>
                 
                 <p class="app-intro">
-                    Here you can share your thoughts, confessions, or ask questions completely anonymously without any social judgment.
+                    Chat with a random partner completely anonymously. Your identity will never be shown.<br>
+                    নিজের পরিচয় গোপন রেখে সম্পূর্ণ নিরাপদে অপরিচিতদের সাথে কথা বলুন।
                 </p>
 
-                <!-- guidelines card -->
+                <!-- Guidelines Card -->
                 <div class="guidelines-card glass-inner">
-                    <h3>📢 Guidelines:</h3>
+                    <h3>📢 Guidelines / নিয়মাবলী:</h3>
                     <ul>
-                        <li><i class="fas fa-shield-alt text-magenta"></i> No offensive language or abuse allowed.</li>
-                        <li><i class="fas fa-user-slash text-cyan"></i> Personal attacks or harassment is strictly prohibited.</li>
-                        <li><i class="fas fa-exclamation-triangle text-magenta"></i> Do not share false or misleading information.</li>
-                        <li><i class="fas fa-gavel text-cyan"></i> The Admin team's decisions are final.</li>
+                        <li><i class="fas fa-shield-alt text-magenta"></i> No offensive language or abuse allowed. / কোনো রকম গালিগালাজ বা খারাপ ভাষা ব্যবহার করা যাবে না।</li>
+                        <li><i class="fas fa-user-slash text-cyan"></i> Personal attacks or harassment is strictly prohibited. / কাউকে ব্যক্তিগত আক্রমণ বা হেনস্থা করা যাবে না।</li>
+                        <li><i class="fas fa-gavel text-magenta"></i> The Admin team's decisions are final. / অ্যাডমিন টিমের সিদ্ধান্তই চূড়ান্ত।</li>
                     </ul>
                 </div>
 
-                <div class="btn-group">
-                    <button class="btn btn-primary" onclick="showScreen('screen-register')">
-                        <i class="fas fa-user-plus"></i> Register / Sign Up
+                <div class="splash-actions mt-2">
+                    <button class="btn btn-primary btn-block btn-lg pulse-glow" onclick="showScreen('screen-login')">
+                        Login / লগইন করুন
                     </button>
-                    <button class="btn btn-secondary" onclick="showScreen('screen-login')">
-                        <i class="fas fa-sign-in-alt"></i> Login / Sign In
+                    <button class="btn btn-secondary btn-block btn-lg mt-1" onclick="showScreen('screen-register')">
+                        Register / রেজিস্ট্রেশন করুন
                     </button>
                 </div>
-
-
             </div>
         </section>
 
@@ -71,30 +69,29 @@
                 <button class="btn-back" onclick="showScreen('screen-splash')">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <h2>Login</h2>
+                <h2>Login / লগইন</h2>
                 <div class="neon-line mb-2"></div>
-                
+
                 <form id="form-login" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label for="login-phone">Phone Number</label>
+                        <label for="login-phone">Mobile Number / মোবাইল নম্বর</label>
                         <div class="input-wrapper">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="login-phone" placeholder="Enter Phone Number" required>
+                            <input type="tel" id="login-phone" placeholder="E.g. 9876543210" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="login-password">Password</label>
+                    <div class="form-group mt-1">
+                        <label for="login-password">Password / পাসওয়ার্ড</label>
                         <div class="input-wrapper">
                             <i class="fas fa-lock"></i>
-                            <input type="password" id="login-password" placeholder="Enter Password" required>
+                            <input type="password" id="login-password" placeholder="Enter password" required>
                         </div>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-block mt-2">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Log In / লগইন করুন</button>
                 </form>
                 
                 <p class="auth-footer">
-                    Don't have an account? <a href="#" onclick="showScreen('screen-register')">Register Now</a>
+                    New User? / নতুন অ্যাকাউন্ট? <a href="#" onclick="showScreen('screen-register')">Register Here / রেজিস্ট্রেশন করুন</a>
                 </p>
             </div>
         </section>
@@ -107,53 +104,59 @@
                 <button class="btn-back" onclick="showScreen('screen-splash')">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <h2>Register</h2>
+                <h2>Register / রেজিস্ট্রেশন</h2>
                 <div class="neon-line mb-2"></div>
 
                 <form id="form-register" onsubmit="handleRegister(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="reg-name">Real Name</label>
+                            <label for="reg-name">Real Name / আসল নাম</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-user-circle"></i>
                                 <input type="text" id="reg-name" placeholder="E.g. Rohan Sen" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-phone">Phone Number</label>
+                            <label for="reg-phone">Real Mobile Number / আসল মোবাইল নম্বর</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-phone"></i>
                                 <input type="tel" id="reg-phone" placeholder="E.g. 9876543210" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-gender">Gender</label>
+                            <label for="reg-alias">Fake Name to Chat / চ্যাট করার ছদ্মনাম</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user-secret"></i>
+                                <input type="text" id="reg-alias" placeholder="E.g. LoneWolf" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-gender">Your Gender / আপনার লিঙ্গ</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-venus-mars"></i>
-                                <select id="reg-gender" onchange="handleGenderChange()" required>
+                                <select id="reg-gender" required>
                                     <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Male">Male / পুরুষ</option>
+                                    <option value="Female">Female / নারী</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-age">Age</label>
+                            <label for="reg-age">Age / বয়স</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-calendar-alt"></i>
                                 <input type="number" id="reg-age" min="18" max="100" placeholder="22" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-city">City / Town</label>
+                            <label for="reg-city">City / শহর</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-city"></i>
                                 <input type="text" id="reg-city" placeholder="E.g. Kolkata" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reg-password">Create Password</label>
+                            <label for="reg-password">Create Password / পাসওয়ার্ড তৈরি করুন</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-lock"></i>
                                 <input type="password" id="reg-password" placeholder="Create your password" required>
@@ -161,42 +164,22 @@
                         </div>
                     </div>
 
-                    <!-- Profile Avatar Row -->
-                    <div class="form-group mt-1" id="avatar-select-group" style="display:none;">
-                        <label>Choose a Profile Avatar</label>
-                        <div class="avatar-select-container" id="avatar-select-container">
-                            <!-- Male Avatars -->
-                            <div class="avatar-option male-avatar selected" data-avatar="avatar_m1" onclick="selectAvatar('avatar_m1')">👨🏻</div>
-                            <div class="avatar-option male-avatar" data-avatar="avatar_m2" onclick="selectAvatar('avatar_m2')">🧔</div>
-                            <div class="avatar-option male-avatar" data-avatar="avatar_m3" onclick="selectAvatar('avatar_m3')">👨🏽‍💻</div>
-                            <div class="avatar-option male-avatar" data-avatar="avatar_m4" onclick="selectAvatar('avatar_m4')">👨🏼‍💼</div>
-                            <div class="avatar-option male-avatar" data-avatar="avatar_m5" onclick="selectAvatar('avatar_m5')">👦</div>
-                            
-                            <!-- Female Avatars -->
-                            <div class="avatar-option female-avatar" data-avatar="avatar_f1" onclick="selectAvatar('avatar_f1')">👩🏻</div>
-                            <div class="avatar-option female-avatar" data-avatar="avatar_f2" onclick="selectAvatar('avatar_f2')">👧🏽</div>
-                            <div class="avatar-option female-avatar" data-avatar="avatar_f3" onclick="selectAvatar('avatar_f3')">👱🏻‍♀️</div>
-                            <div class="avatar-option female-avatar" data-avatar="avatar_f4" onclick="selectAvatar('avatar_f4')">🙋‍♀️</div>
-                            <div class="avatar-option female-avatar" data-avatar="avatar_f5" onclick="selectAvatar('avatar_f5')">👩🏼‍💼</div>
-                        </div>
-                    </div>
-
                     <!-- Verification photo real uploads -->
                     <div class="verification-area mt-1 glass-inner">
-                        <h4>🛡️ Safety Verification</h4>
-                        <p class="text-small" style="font-weight:bold; color:var(--text-white);">This is only to check if you are a real human (No photo upload, webcam only).</p>
+                        <h4>🛡️ Safety Verification / নিরাপত্তা যাচাইকরণ</h4>
+                        <p class="text-small" style="font-weight:bold; color:var(--text-white);">Please take a selfie to verify you are real. / আপনি আসল ব্যক্তি কিনা তা নিশ্চিত করতে একটি সেলফি তুলুন।</p>
                         
                         <div class="webcam-container" id="webcam-container" style="display:none; flex-direction:column; gap:0.5rem; margin-bottom:1rem;">
                             <video id="webcam-preview" autoplay playsinline style="width:100%; max-height:240px; object-fit:cover; border-radius:8px; border: 1px solid var(--border-glass);"></video>
                             <div style="display:flex; gap:0.5rem;">
-                                <button type="button" class="btn btn-primary btn-small" id="btn-capture-selfie" onclick="captureSelfieFromWebcam()">📸 Take Selfie</button>
-                                <button type="button" class="btn btn-secondary btn-small" onclick="stopWebcam()">Close</button>
+                                <button type="button" class="btn btn-primary btn-small" id="btn-capture-selfie" onclick="captureSelfieFromWebcam()">📸 Take Selfie / সেলফি তুলুন</button>
+                                <button type="button" class="btn btn-secondary btn-small" onclick="stopWebcam()">Close / বন্ধ করুন</button>
                             </div>
                         </div>
 
                         <div class="verify-buttons" style="display:flex; gap:0.8rem; margin-top:0.6rem;">
                             <button type="button" class="btn btn-secondary btn-small" id="btn-selfie" onclick="startWebcam()">
-                                <i class="fas fa-camera"></i> Start Selfie Camera
+                                <i class="fas fa-camera"></i> Start Selfie Camera / ক্যামেরা চালু করুন
                             </button>
                         </div>
                         <div class="verify-status mt-05" style="display:flex; gap:0.6rem;">
@@ -210,78 +193,33 @@
 
                     <div class="form-check mt-1">
                         <input type="checkbox" id="reg-guidelines" required>
-                        <label for="reg-guidelines">I agree to follow the <a href="#" onclick="alert('I agree to respect guidelines and be safe.')">Community Guidelines</a>.</label>
+                        <label for="reg-guidelines">I agree to follow the Guidelines. / আমি নিয়মাবলী মেনে চলতে রাজি।</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block mt-2">Sign Up</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Sign Up / রেজিস্টার করুন</button>
                 </form>
                 
                 <p class="auth-footer">
-                    Already have an account? <a href="#" onclick="showScreen('screen-login')">Login Here</a>
+                    Already have an account? / অ্যাকাউন্ট আছে? <a href="#" onclick="showScreen('screen-login')">Login Here / লগইন করুন</a>
                 </p>
             </div>
         </section>
 
         <!-- ========================================== -->
-        <!-- 4. PENDING VERIFICATION SCREEN -->
+        <!-- 4. MAIN APP SCREEN (ONLY RANDOM CHAT VIEW) -->
         <!-- ========================================== -->
-        <section id="screen-pending" class="screen">
-            <div class="splash-card glass">
-                <span class="logo-emoji text-yellow">⏳</span>
-                <h2>Verification Pending</h2>
-                <div class="neon-line"></div>
-                <p class="verification-desc">
-                    Thank you! Your registration request and uploaded verification photos have been successfully submitted to the admin panel.
-                    <br><br>
-                    You will be able to log in once our admin reviews your selfie and approves your account. We perform this verification check to keep the community safe.
-                </p>
-                <button class="btn btn-secondary" onclick="showScreen('screen-splash')">Go back to Welcome screen</button>
-            </div>
-        </section>
-
-        <!-- ========================================== -->
-        <!-- 5. MAIN NAVIGATION LAYOUT SCREEN -->
-        <!-- ========================================== -->
-        <section id="screen-main" class="screen-main-layout">
-            
-            <!-- Facebook-like Top Navigation Bar -->
-            <header class="fb-top-nav glass">
-                <div class="fb-left">
+        <section id="screen-main" class="screen">
+            <header class="fb-header glass">
+                <div class="fb-left logo-nav-brand" onclick="switchTab('random-chat')">
                     <img src="logo.png" class="fb-logo-img" alt="Logo">
                     <span class="fb-logo-text font-outfit">Mon Khule Bolo</span>
                 </div>
                 
-                <nav class="fb-middle nav-menu">
-                    <a href="#" class="nav-item active" data-tab="home" onclick="switchTab('home')">
-                        <i class="fas fa-home"></i> <span>Home</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="random-chat" onclick="switchTab('random-chat')">
-                        <i class="fas fa-user-secret"></i> <span>Randomly Chat Anonymously</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="categories" onclick="switchTab('categories')">
-                        <i class="fas fa-list"></i> <span>Categories</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="notifications" onclick="switchTab('notifications')">
-                        <i class="fas fa-bell"></i> <span>Notifications</span>
-                        <span id="badge-notif" class="badge" style="display:none;">0</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="messages" onclick="switchTab('messages')">
-                        <i class="fas fa-envelope"></i> <span>Messages</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="friends" onclick="switchTab('friends')">
-                        <i class="fas fa-user-friends"></i> <span>Friends</span>
-                        <span id="badge-friends" class="badge" style="display:none;">0</span>
-                    </a>
-                    <a href="#" class="nav-item" data-tab="profile" onclick="switchTab('profile')">
-                        <i class="fas fa-user"></i> <span>Profile</span>
-                    </a>
-                </nav>
-                
                 <div class="fb-right">
                     <button class="btn-icon" id="btn-admin-panel" style="display:none;" onclick="showAdminPanel()">
-                        <i class="fas fa-cogs text-magenta"></i> <span>Admin</span>
+                        <i class="fas fa-user-shield text-magenta"></i> <span>Admin</span>
                     </button>
-                    <button class="btn-icon" onclick="toggleTheme()">
+                    <button class="btn-icon" onclick="toggleTheme()" title="Toggle Theme">
                         <i class="fas fa-moon" id="theme-icon"></i>
                     </button>
                     <button class="btn-icon text-red" onclick="logout()" title="Logout">
@@ -295,168 +233,80 @@
                 
                 <!-- Page Title Workspace Header -->
                 <div class="workspace-header">
-                    <h2 id="header-title">Home Feed</h2>
+                    <h2 id="header-title">Anonymous Random Chat / বেনামী চ্যাট</h2>
                 </div>
 
-                <!-- Scrollable Tab Container -->
-                <div class="tab-pane">
+                <div id="tab-random-chat" class="tab-view active">
                     
-                    <!-- TAB A: HOME FEED -->
-                    <div id="tab-home" class="tab-view active">
-                        <!-- Post Creator Box -->
-                        <div class="post-creator glass-inner">
-                            <div class="post-creator-header">
-                                <div class="post-identity-select">
-                                    <span>Identity:</span>
-                                    <label class="radio-label">
-                                        <input type="radio" name="post-identity" value="real_name" checked>
-                                        <span>Real Name</span>
-                                    </label>
-                                    <label class="radio-label">
-                                        <input type="radio" name="post-identity" value="anonymous">
-                                        <span>Anonymous</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <textarea id="post-textarea" placeholder="Speak your mind... Share confessions, crushes, or thoughts!"></textarea>
-                            
-                            <!-- Attached preview indicator -->
-                            <div id="attached-post-image-preview" class="attached-img-preview" style="display:none;">
-                                <img src="" id="img-preview-tag" alt="Preview">
-                                <button type="button" class="btn-close-preview" onclick="clearPostImage()"><i class="fas fa-times"></i></button>
-                            </div>
-
-                            <div class="post-creator-footer">
-                                <div class="post-options">
-                                    <button class="btn-post-opt" onclick="triggerPostImageUpload()"><i class="fas fa-image"></i> Add Image</button>
-                                    <input type="file" id="post-image-input" style="display:none;" accept="image/*" onchange="previewPostImage(event)">
-                                    
-                                    <select id="post-category">
-                                        <option value="Random Thoughts">Random Thoughts</option>
-                                        <option value="Confession">Confession</option>
-                                        <option value="Deep Secret">Deep Secret</option>
-                                        <option value="Dark Secret">Dark Secret</option>
-                                        <option value="Dark Desire">Dark Desire</option>
-                                        <option value="Naughty Thoughts">Naughty Thoughts</option>
-                                        <option value="Secret Crush">Secret Crush</option>
-                                        <option value="Guilt & Regret">Guilt & Regret</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-primary btn-small" onclick="createPost()">Post</button>
-                            </div>
-                        </div>
-
-                        <!-- Posts Feed List -->
-                        <div id="feed-list" class="feed-list">
-                            <!-- Posts dynamically loaded -->
-                        </div>
+                    <!-- Permanent Privacy alert banner -->
+                    <div class="privacy-alert-banner glass-inner">
+                        <i class="fas fa-user-lock text-magenta"></i>
+                        <span><strong>Make sure your privacy is our top priority / নিশ্চিত থাকুন যে আপনার গোপনীয়তা আমাদের সর্বোচ্চ অগ্রাধিকার</strong></span>
                     </div>
 
-                    <!-- TAB C: CATEGORIES -->
-                    <div id="tab-categories" class="tab-view">
-                        <div class="categories-grid">
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Confession')">
-                                <span class="cat-icon">🗣️</span>
-                                <h3>Confession</h3>
-                                <p>Share hidden feelings or secrets anonymously</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Deep Secret')">
-                                <span class="cat-icon">🤫</span>
-                                <h3>Deep Secret</h3>
-                                <p>Share your deepest secrets safely</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Dark Secret')">
-                                <span class="cat-icon">🌑</span>
-                                <h3>Dark Secret</h3>
-                                <p>Unburden yourself from your dark memories</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Dark Desire')">
-                                <span class="cat-icon">🕯️</span>
-                                <h3>Dark Desire</h3>
-                                <p>Talk about your secret wishes and desires</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Naughty Thoughts')">
-                                <span class="cat-icon">😈</span>
-                                <h3>Naughty Thoughts</h3>
-                                <p>Playful space for your cheeky thoughts</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Secret Crush')">
-                                <span class="cat-icon">❤️</span>
-                                <h3>Secret Crush</h3>
-                                <p>Confess your love to your secret crushes</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Guilt & Regret')">
-                                <span class="cat-icon">😔</span>
-                                <h3>Guilt & Regret</h3>
-                                <p>Lighten your heart from guilt and regrets</p>
-                            </div>
-                            <div class="category-card glass-inner hover-glow" onclick="selectCategory('Random Thoughts')">
-                                <span class="cat-icon">💡</span>
-                                <h3>Random Thoughts</h3>
-                                <p>General thoughts, ideas, or daily stories</p>
+                    <!-- Welcome / Start Search Screen -->
+                    <div id="random-chat-welcome" class="random-chat-welcome glass-inner mt-1">
+                        <span class="big-emoji">🤫</span>
+                        <h2>Anonymous Random Chat / অপরিচিতের সাথে চ্যাট</h2>
+                        <p class="intro-text">
+                            Select who you want to search and speak your heart out safely.<br>
+                            আপনি যার সাথে কথা বলতে চান তা নির্বাচন করুন এবং মন খুলে কথা বলুন।
+                        </p>
+                        
+                        <div class="gender-search-selector mt-1">
+                            <p style="font-weight: 500; margin-bottom: 0.5rem;">I want to search / আমি খুঁজতে চাই:</p>
+                            <div class="gender-cards-group">
+                                <label class="gender-select-card">
+                                    <input type="radio" name="search-gender" value="Male" checked>
+                                    <div class="gender-card-box">
+                                        <span class="g-emoji">👨🏻</span>
+                                        <div class="g-title">Male / পুরুষ</div>
+                                    </div>
+                                </label>
+                                <label class="gender-select-card">
+                                    <input type="radio" name="search-gender" value="Female">
+                                    <div class="gender-card-box">
+                                        <span class="g-emoji">👩🏻</span>
+                                        <div class="g-title">Female / নারী</div>
+                                    </div>
+                                </label>
                             </div>
                         </div>
+                        
+                        <div id="search-partner-loading" style="display:none;" class="search-loader mt-2">
+                            <div class="spinner"></div>
+                            <p id="search-partner-text" class="font-bold text-magenta">Searching for a companion...</p>
+                            <p id="search-partner-text-sub" class="text-small text-gray">Please wait a moment...</p>
+                        </div>
+                        
+                        <button id="btn-start-random-chat" class="btn btn-primary mt-2 btn-lg pulse-glow" onclick="startRandomChat()">
+                            Search Partner / সঙ্গী খুঁজুন
+                        </button>
                     </div>
 
-                    <!-- TAB D: NOTIFICATIONS -->
-                    <div id="tab-notifications" class="tab-view">
-                        <div class="notification-header glass-inner mb-1">
-                            <span>Notifications</span>
-                            <button class="btn btn-secondary btn-small" onclick="markAllNotificationsRead()"><i class="fas fa-check-double"></i> Mark All as Read</button>
-                        </div>
-                        <div id="notifications-list" class="notifications-list">
-                            <!-- Notifications dynamically loaded -->
-                        </div>
-                    </div>
-
-                    <!-- TAB E: MESSAGES / INBOX -->
-                    <div id="tab-messages" class="tab-view">
-                        <div class="messages-container">
-                            <div class="message-requests-section mb-2">
-                                <h3>📥 Chat Requests</h3>
-                                <div id="chat-requests-list" class="chat-requests-list">
-                                    <!-- Request list loaded dynamically -->
-                                </div>
-                            </div>
-                            
-                            <div class="active-chats-section">
-                                <h3>💬 Active Chats</h3>
-                                <div id="active-chats-list" class="active-chats-list">
-                                    <!-- Active chat list loaded dynamically -->
-                                </div>
+                    <!-- Random Chat Room -->
+                    <div id="random-chat-room" class="chat-room-layout mt-1" style="display:none;">
+                        
+                        <!-- Left Panel: Girl's active chat list -->
+                        <div id="girl-chat-sidebar" class="girl-chat-sidebar glass-inner" style="display:none;">
+                            <h4>My Chats / আমার চ্যাটসমূহ</h4>
+                            <div id="girl-chats-list">
+                                <!-- Loaded dynamically -->
                             </div>
                         </div>
-                    </div>
 
-                    <!-- TAB F: RANDOM CHAT (REBRANDED BENAMI CHAT) -->
-                    <div id="tab-random-chat" class="tab-view">
-                        <div id="random-chat-welcome" class="random-chat-welcome glass-inner">
-                            <span class="big-emoji">🤫</span>
-                            <h2>Random Chat</h2>
-                            <p class="intro-text">
-                                Chat with a random partner completely anonymously. Your identity will never be shown.
-                            </p>
-                            
-                            <div id="search-partner-loading" style="display:none;" class="search-loader">
-                                <div class="spinner"></div>
-                                <p id="search-partner-text">Searching for a companion...</p>
-                                <p class="text-small">Please wait a moment...</p>
-                            </div>
-                            
-                            <button id="btn-start-random-chat" class="btn btn-primary mt-2 btn-lg pulse-glow" onclick="startRandomChat()">
-                                Start Random Chat
-                            </button>
-                        </div>
-
-                        <!-- Random Chat Room -->
-                        <div id="random-chat-room" class="chat-room glass-inner" style="display:none;">
+                        <!-- Right Panel: Active Chat Box -->
+                        <div class="chat-room-main glass-inner">
                             <div class="chat-room-header">
-                                <div class="partner-avatar">👨🏻</div>
+                                <div class="partner-avatar" id="user-partner-avatar">👤</div>
                                 <div class="partner-info">
                                     <h4 id="partner-alias-header">Random Companion</h4>
                                     <span id="my-alias-badge">Your Alias: ...</span>
                                 </div>
-                                <button class="btn btn-danger btn-small" onclick="stopRandomChat()"><i class="fas fa-times-circle"></i> Disconnect</button>
+                                <div class="chat-header-actions">
+                                    <button id="btn-block-partner" class="btn btn-warning btn-small" onclick="toggleBlockPartner()"><i class="fas fa-ban"></i> Block</button>
+                                    <button class="btn btn-danger btn-small" onclick="deleteActiveChat()"><i class="fas fa-trash-alt"></i> Delete</button>
+                                </div>
                             </div>
                             
                             <!-- Chat message history window -->
@@ -479,125 +329,15 @@
                                 <button class="btn-send" onclick="sendRandomChatMessage()"><i class="fas fa-paper-plane"></i></button>
                             </div>
                         </div>
+
                     </div>
-
-
-
-                    <!-- TAB G: FRIENDS SECTION -->
-                    <div id="tab-friends" class="tab-view">
-                        <div class="friends-container glass-inner" style="padding: 1.5rem;">
-                            <div class="friends-section mb-2">
-                                <h3 class="text-magenta"><i class="fas fa-user-plus"></i> Pending Friend Requests</h3>
-                                <div class="neon-line mb-1" style="height: 1px;"></div>
-                                <div id="friend-requests-list" class="friend-requests-list">
-                                    <!-- Pending friend requests loaded dynamically -->
-                                </div>
-                            </div>
-                            
-                            <div class="friends-section">
-                                <h3 class="text-cyan"><i class="fas fa-users"></i> My Friends</h3>
-                                <div class="neon-line mb-1" style="height: 1px;"></div>
-                                <div id="my-friends-list" class="my-friends-list">
-                                    <!-- Friends list loaded dynamically -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB H: PROFILE SCREEN -->
-                    <div id="tab-profile" class="tab-view">
-                        <!-- Profile Card -->
-                        <div class="profile-card-details glass-inner">
-                            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                                <div class="profile-avatar-large" id="profile-display-avatar">👩🏻</div>
-                                <h2 id="profile-display-name">Rohan Sen</h2>
-                                <p id="profile-display-username" class="text-cyan font-bold" style="margin-top: 4px; margin-bottom: 4px; font-size: 1.1rem;">@rohan_sen</p>
-                                <p id="profile-display-age-gender" class="text-gray">Age: 22 | Male</p>
-                                <p id="profile-display-location" class="text-cyan">📍 Kolkata, West Bengal</p>
-                                <p id="profile-display-phone" class="text-gray" style="font-size: 0.85rem; margin-top: 4px; display: none;">Phone: +919876543210</p>
-                                
-                                <div class="profile-bio-box mt-2 glass-inner text-left" style="width: 100%;">
-                                    <h4>Bio:</h4>
-                                    <p id="profile-display-bio">I am here to chat and read stories.</p>
-                                </div>
-                            </div>
-
-                            <!-- Friend Action Button Container (for inspecting other users) -->
-                            <div id="profile-friend-action-container" style="display:none; margin-top: 1rem; justify-content: center; gap: 10px;"></div>
-
-                            <!-- Edit Profile Button Trigger -->
-                            <div style="display:flex; justify-content:center; margin-top: 1rem;">
-                                <button class="btn btn-secondary btn-small" id="btn-toggle-edit-profile" onclick="toggleEditProfile()"><i class="fas fa-edit"></i> Edit Profile</button>
-                            </div>
-
-                            <!-- Edit Profile Box -->
-                            <div class="profile-edit-box mt-2 text-left" id="profile-edit-section" style="display:none;">
-                                <h3>Update Profile Details</h3>
-                                <div class="neon-line mb-1" style="height: 1px;"></div>
-                                
-                                <div class="form-group">
-                                    <label>Choose Avatar Emojis</label>
-                                    <div class="avatar-select-container" id="profile-avatar-options" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
-                                        <!-- Will be dynamically populated with male/female avatar emojis depending on user gender -->
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="edit-profile-age">Age</label>
-                                    <input type="number" id="edit-profile-age" min="18" max="100">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="edit-profile-city">City</label>
-                                    <input type="text" id="edit-profile-city">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="edit-bio">Bio</label>
-                                    <textarea id="edit-bio" placeholder="Write something about yourself..."></textarea>
-                                </div>
-
-                                <div style="display: flex; gap: 10px; margin-top: 1rem;">
-                                    <button class="btn btn-primary" onclick="saveProfileChanges()">Save Changes</button>
-                                    <button class="btn btn-secondary" onclick="toggleEditProfile()">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- User's Posts Section -->
-                        <div class="profile-posts-section mt-2">
-                            <h3><i class="fas fa-mail-bulk text-magenta"></i> My Confessions & Posts</h3>
-                            <div class="neon-line mb-1" style="height: 1px;"></div>
-                            <div id="profile-posts-list" class="feed-list">
-                                <!-- User's posts will be loaded dynamically -->
-                            </div>
-                        </div>
-
-                        <!-- Profile Auditing Privacy Vault (Visible ONLY to Admins) -->
-                        <div id="profile-admin-vault" class="admin-vault-container mt-2" style="display:none;">
-                            <div class="vault-divider"></div>
-                            <h3 class="text-red"><i class="fas fa-shield-virus"></i> ADMIN SECURITY PRIVACY VAULT</h3>
-                            <div class="vault-card glass-inner border-red">
-                                <p><strong>Real Name:</strong> <span id="vault-real-name">...</span></p>
-                                <p><strong>Phone:</strong> <span id="vault-phone">...</span></p>
-                                <p><strong>Password:</strong> <span id="vault-password" class="text-magenta">...</span></p>
-                                <p><strong>Email:</strong> <span id="vault-email">...</span></p>
-                                <p><strong>Registration IP:</strong> <span id="vault-ip">127.0.0.1</span></p>
-                                
-                                <h4 class="text-cyan mt-1">Verification Selfie Photo:</h4>
-                                <div class="vault-img-preview mt-05">
-                                    <img id="vault-selfie-img" src="" alt="Selfie">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+
             </main>
         </section>
 
         <!-- ========================================== -->
-        <!-- 6. ADMIN PANEL DASHBOARD PAGE -->
+        <!-- 5. ADMIN PANEL DASHBOARD PAGE -->
         <!-- ========================================== -->
         <section id="screen-admin-panel" class="screen">
             <div class="admin-panel-container glass">
@@ -607,76 +347,16 @@
                 </header>
 
                 <div class="admin-nav mb-2">
-                    <button class="btn-admin-tab active" data-atab="dashboard" onclick="switchAdminTab('dashboard')">Dashboard</button>
-                    <button class="btn-admin-tab" data-atab="verify" onclick="switchAdminTab('verify')">Verify Accounts</button>
-                    <button class="btn-admin-tab" data-atab="pending_posts" onclick="switchAdminTab('pending_posts')">Manage Posts</button>
-                    <button class="btn-admin-tab" data-atab="users" onclick="switchAdminTab('users')">Users List</button>
-                    <button class="btn-admin-tab" data-atab="reports" onclick="switchAdminTab('reports')">Reports</button>
-                    <button class="btn-admin-tab" data-atab="blacklist" onclick="switchAdminTab('blacklist')">Blacklist Keywords</button>
-                    <button class="btn-admin-tab" data-atab="anon_chats" onclick="switchAdminTab('anon_chats')">Random Chats</button>
-                    <button class="btn-admin-tab" data-atab="all_chats" onclick="switchAdminTab('all_chats')">All Chats History</button>
+                    <button class="btn-admin-tab active" data-atab="users" onclick="switchAdminTab('users')">Users List / ব্যবহারকারী তালিকা</button>
+                    <button class="btn-admin-tab" data-atab="anon_chats" onclick="switchAdminTab('anon_chats')">Random Chats / র্যান্ডম চ্যাটসমূহ</button>
                 </div>
 
                 <div class="admin-content-pane">
                     
-                    <!-- ADMIN TAB: DASHBOARD -->
-                    <div id="atab-dashboard" class="admin-tab-view active">
-                        <div class="admin-stats-grid">
-                            <div class="stat-card glass-inner">
-                                <span class="stat-label">Total Users</span>
-                                <h2 id="stat-total-users">0</h2>
-                            </div>
-                            <div class="stat-card glass-inner">
-                                <span class="stat-label text-yellow">Pending Verification</span>
-                                <h2 id="stat-pending-verify" class="text-yellow">0</h2>
-                            </div>
-                            <div class="stat-card glass-inner">
-                                <span class="stat-label">Total Posts</span>
-                                <h2 id="stat-total-posts">0</h2>
-                            </div>
-                            <div class="stat-card glass-inner">
-                                <span class="stat-label text-red">Active Reports</span>
-                                <h2 id="stat-active-reports" class="text-red">0</h2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ADMIN TAB: VERIFY ACCOUNTS -->
-                    <div id="atab-verify" class="admin-tab-view">
-                        <div id="admin-verify-list" class="admin-list">
-                            <!-- Pending verifications dynamically loaded -->
-                        </div>
-                    </div>
-
-                    <!-- ADMIN TAB: PENDING POSTS -->
-                    <div id="atab-pending_posts" class="admin-tab-view">
-                        <div id="admin-pending-posts-list" class="admin-list">
-                            <!-- Posts dynamically loaded -->
-                        </div>
-                    </div>
-
                     <!-- ADMIN TAB: USERS LIST -->
-                    <div id="atab-users" class="admin-tab-view">
+                    <div id="atab-users" class="admin-tab-view active">
                         <div id="admin-users-list" class="admin-list">
                             <!-- Users list dynamically loaded -->
-                        </div>
-                    </div>
-
-                    <!-- ADMIN TAB: REPORTS -->
-                    <div id="atab-reports" class="admin-tab-view">
-                        <div id="admin-reports-list" class="admin-list">
-                            <!-- Reports list dynamically loaded -->
-                        </div>
-                    </div>
-
-                    <!-- ADMIN TAB: BLACKLIST -->
-                    <div id="atab-blacklist" class="admin-tab-view">
-                        <div class="blacklist-creator-box glass-inner mb-2">
-                            <input type="text" id="input-blacklist-word" placeholder="Add banned word...">
-                            <button class="btn btn-primary" onclick="addBlacklistWord()">Add</button>
-                        </div>
-                        <div id="admin-blacklist-list" class="blacklist-list">
-                            <!-- Banned keywords dynamically loaded -->
                         </div>
                     </div>
 
@@ -687,13 +367,6 @@
                         </div>
                     </div>
 
-                    <!-- ADMIN TAB: ALL CHATS (AUDIT HISTORY) -->
-                    <div id="atab-all_chats" class="admin-tab-view">
-                        <div id="admin-all-chats-list" class="admin-list">
-                            <!-- Chronological logs grouped by pairs -->
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -701,64 +374,39 @@
     </div> <!-- End App Container -->
 
     <!-- ========================================== -->
-    <!-- 7. FLOATING DIALOGS & LIGHTBOXES -->
+    <!-- 6. FLOATING DIALOGS & LIGHTBOXES -->
     <!-- ========================================== -->
-
-
 
     <!-- User Inspection Dialog (Verify Account Detail View) -->
     <div id="dialog-user-inspect" class="dialog-overlay" style="display:none;">
         <div class="dialog-box glass dialog-wide">
-            <h3>👤 User Verification Inspector</h3>
+            <h3>👤 User Profile Details</h3>
             <div class="neon-line mb-1"></div>
             
-            <div class="inspect-details-grid">
-                <div>
+            <div class="inspect-details-grid" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
                     <p><strong>Real Name:</strong> <span id="ins-name">...</span></p>
                     <p><strong>Phone:</strong> <span id="ins-phone">...</span></p>
                     <p><strong>Password:</strong> <span id="ins-password" class="text-magenta font-bold">...</span></p>
                     <p><strong>Age & Gender:</strong> <span id="ins-age-gender">...</span></p>
                     <p><strong>Location:</strong> <span id="ins-location">...</span></p>
-                    
-                    <h4 class="mt-1">Selfie Photo:</h4>
-                    <div class="inspect-img-box selfie-box" style="margin-top: 5px;">
-                        <img id="ins-selfie-img" src="" alt="Selfie" style="max-height: 200px; width: auto; max-width: 100%; border-radius: 8px;">
-                    </div>
                 </div>
-                <div>
-                    <h4>Personal Photo:</h4>
-                    <div class="inspect-img-box gallery-box" style="margin-top: 5px;">
-                        <img id="ins-gal-1" src="" alt="Personal Photo" style="max-height: 200px; width: auto; max-width: 100%; border-radius: 8px;">
+                <div style="flex-shrink: 0;">
+                    <h4>Selfie Photo:</h4>
+                    <div class="inspect-img-box selfie-box" style="margin-top: 5px;">
+                        <img id="ins-selfie-img" src="" alt="Selfie" style="max-height: 220px; width: auto; max-width: 100%; border-radius: 8px; border:1px solid var(--border-glass);">
                     </div>
                 </div>
             </div>
             
             <div class="btn-group mt-2">
-                <button class="btn btn-success" onclick="approveInspectedUser()"><i class="fas fa-check"></i> Approve User</button>
                 <button class="btn btn-danger" onclick="deleteInspectedUser()"><i class="fas fa-trash"></i> Delete User</button>
                 <button class="btn btn-secondary" onclick="closeInspectDialog()">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- Active Safety Chat Dialog (Audit dialogues between users) -->
-    <div id="dialog-safety-chat" class="dialog-overlay" style="display:none;">
-        <div class="dialog-box glass dialog-wide">
-            <h3>🛡️ Safety Chat Monitor Audit Logs</h3>
-            <div class="neon-line mb-1"></div>
-            <p id="safety-chat-desc" class="text-gray mb-1">Audit log between User A and User B</p>
-            
-            <div id="safety-chat-history" class="chat-history audit-history-box">
-                <!-- Audit history logs loaded dynamically -->
-            </div>
-            
-            <div class="btn-group mt-1">
-                <button class="btn btn-secondary btn-block" onclick="closeSafetyChatDialog()">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Chat with Anonymous User Dialog -->
+    <!-- Admin Chat Dialog with User -->
     <div id="dialog-admin-anon-chat" class="dialog-overlay" style="display:none;">
         <div class="dialog-box glass dialog-wide">
             <div class="chat-room-header">
@@ -786,7 +434,7 @@
                 <input type="file" id="admin-image-input" style="display:none;" accept="image/*" onchange="previewAdminImage(event)">
                 
                 <input type="text" id="admin-anon-chat-input" placeholder="Type a reply..." onkeypress="handleAdminChatKeyPress(event)">
-                <button class="btn-send" onclick="sendAdminAnonChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                <button class="btn-send" id="btn-admin-send" onclick="sendAdminAnonChatMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
@@ -804,32 +452,6 @@
             <div id="lightbox-admin-actions" class="lightbox-actions-row mt-1" style="display:none;">
                 <button class="btn btn-primary" onclick="saveLightboxImage()"><i class="fas fa-download"></i> Save Image</button>
                 <button class="btn btn-danger" onclick="deleteLightboxImage()"><i class="fas fa-trash-alt"></i> Delete Image</button>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- Private Chat Dialog Overlay -->
-    <div id="dialog-private-chat" class="dialog-overlay" style="display:none;">
-        <div class="dialog-box glass dialog-wide">
-            <div class="chat-room-header" style="display:flex; align-items:center; gap:1rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border-glass);">
-                <div class="partner-avatar" id="private-partner-avatar" style="width:40px; height:40px; border-radius:50%; background:var(--color-magenta-glow); display:flex; align-items:center; justify-content:center; font-size:1.4rem;">👩🏻</div>
-                <div class="partner-info" style="flex:1;">
-                    <h4 id="private-chat-partner-name" style="font-size:0.95rem; font-weight:600; color:var(--text-white);">Chatting...</h4>
-                    <span id="private-chat-partner-location" style="font-size:0.75rem; color:var(--text-dim);">📍 Location</span>
-                </div>
-                <button class="btn-icon" onclick="closePrivateChat()"><i class="fas fa-times"></i></button>
-            </div>
-            
-            <div id="private-chat-history" class="chat-history" style="flex:1; overflow-y:auto; padding:1rem 0; display:flex; flex-direction:column; gap:0.8rem; height:320px;">
-                <!-- Messages loaded dynamically -->
-            </div>
-            
-            <!-- Chat Input Row -->
-            <div class="chat-input-row" style="display:flex; gap:0.6rem; align-items:center; border-top:1px solid var(--border-glass); padding-top:0.8rem;">
-                <input type="text" id="private-chat-input" placeholder="Type a message..." onkeypress="handlePrivateChatKeyPress(event)" style="flex:1; background:var(--bg-glass-inner); border:1px solid var(--border-glass); border-radius:20px; padding:0.75rem 1.2rem; font-size:0.9rem; color:var(--text-white);">
-                <button class="btn-send" onclick="sendPrivateChatMessage()" style="background:var(--color-magenta); border:none; width:42px; height:42px; border-radius:50%; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
